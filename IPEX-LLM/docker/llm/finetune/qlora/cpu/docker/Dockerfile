@@ -50,16 +50,16 @@ RUN mkdir -p /ipex_llm/data && mkdir -p /ipex_llm/model && \
     pip install https://intel-extension-for-pytorch.s3.amazonaws.com/ipex_stable/cpu/intel_extension_for_pytorch-2.1.0%2Bcpu-cp311-cp311-linux_x86_64.whl && \
     pip install oneccl_bind_pt -f https://developer.intel.com/ipex-whl-stable && \
     # install huggingface dependencies
-    pip install datasets transformers==4.36.0 && \
+    pip install datasets transformers==4.40.0 && \
     pip install fire peft==0.10.0 && \
     pip install accelerate==0.23.0 && \
     pip install bitsandbytes && \
     # get qlora example code
     cd /ipex_llm && \
     git clone https://github.com/diongzy/intel-ipex.git && \
-    mv IPEX_LLM/CPU/QLoRA-FineTuning/* . && \
+    mv IPEX-LLM/python/llm/example/CPU/QLoRA-FineTuning/* . && \
     mkdir -p /GPU/LLM-Finetuning && \
-    mv IPEX_LLM/GPU/LLM-Finetuning/common /GPU/LLM-Finetuning/common && \
+    mv IPEX-LLM/python/llm/example/GPU/LLM-Finetuning/common /GPU/LLM-Finetuning/common && \
     rm -r IPEX-LLM
     #https://github.com/intel-analytics/IPEX-LLM.git
 
