@@ -14,10 +14,10 @@ if [ -d "/home/qmed-intel/models/meta-llama/Meta-Llama-3-8B-Instruct" ];
 then
   MODEL_PARAM="--repo-id-or-model-path /home/qmed-intel/models/meta-llama/Meta-Llama-3-8B-Instruct"  # otherwise, default to download from HF repo
 fi
-
-if [ -d "/home/qmed-intel/Desktop/alpaca_data_cleaned" ];
+# /home/qmed-intel/Desktop/alpaca_data_cleaned
+if [ -d "/home/qmed-intel/Desktop/test_data" ];
 then
-  DATA_PARAM="--dataset /home/qmed-intel/Desktop/alpaca_data_cleaned" # otherwise, default to download from HF dataset
+  DATA_PARAM="--dataset /home/qmed-intel/Desktop/test_data" # otherwise, default to download from HF dataset
 fi
 
 if [ "$STANDALONE_DOCKER" = "TRUE" ]

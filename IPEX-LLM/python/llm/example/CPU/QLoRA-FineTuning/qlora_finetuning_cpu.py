@@ -38,7 +38,7 @@ if __name__ == "__main__":
     parser.add_argument('--repo-id-or-model-path', type=str, default="/home/qmed-intel/models/meta-llama/Meta-Llama-3-8B-Instruct",
                         help='The huggingface repo id for the Llama2 (e.g. `meta-llama/Llama-2-7b-hf` and `meta-llama/Llama-2-13b-chat-hf`) to be downloaded'
                              ', or the path to the huggingface checkpoint folder')
-    parser.add_argument('--dataset', type=str, default="yahma/alpaca-cleaned")
+    parser.add_argument('--dataset', type=str, default="/home/qmed-intel/Desktop/test_data")
 
     args = parser.parse_args()
     model_path = args.repo_id_or_model_path
