@@ -57,7 +57,7 @@ RUN mkdir -p /ipex_llm/data && mkdir -p /ipex_llm/model && \
     # get qlora example code
     cd /ipex_llm && \
     git clone https://github.com/diongzy/intel-ipex.git && \
-    mv intel-ipex/python/llm/example/CPU/QLoRA-FineTuning/ . && \
+    mv intel-ipex/python/llm/example/CPU/QLoRA-FineTuning/* . && \
     mkdir -p /GPU/LLM-Finetuning && \
     mv intel-ipex/python/llm/example/GPU/LLM-Finetuning/common /GPU/LLM-Finetuning/common && \
     rm -r IPEX-LLM
