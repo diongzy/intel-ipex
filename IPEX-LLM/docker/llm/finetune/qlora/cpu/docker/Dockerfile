@@ -54,6 +54,7 @@ RUN mkdir -p /ipex_llm/data && mkdir -p /ipex_llm/model && \
     pip install fire peft==0.10.0 && \
     pip install accelerate==0.23.0 && \
     pip install bitsandbytes && \
+    pip install trl && \
     # get qlora example code
     cd /ipex_llm && \
     git clone https://github.com/diongzy/intel-ipex.git && \
