@@ -100,7 +100,7 @@ if __name__ == "__main__":
             learning_rate=2e-4,
             logging_steps=10,  # Logs every 10 steps, you can also use `logging_strategy='Epoch'`
             output_dir="outputs",
-            optim="paged_adamw_8bit",
+            optim="adamw_hf",
             evaluation_strategy="epoch",  # Evaluates at the end of each epoch
             save_strategy="epoch",  # Saves at the end of each epoch
             load_best_model_at_end=True,  # Optional: load the best model at the end of training
