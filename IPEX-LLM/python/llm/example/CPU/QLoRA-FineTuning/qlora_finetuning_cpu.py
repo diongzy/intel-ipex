@@ -107,9 +107,10 @@ if __name__ == "__main__":
             # gradient_checkpointing=True, # can further reduce memory but slower
         ),
         # Inputs are dynamically padded to the maximum length of a batch
-        data_collator=transformers.DataCollatorForSeq2Seq(
-            tokenizer, pad_to_multiple_of=8, return_tensors="pt", padding=True
-        ),
+        # data_collator=transformers.DataCollatorForSeq2Seq(
+        #     tokenizer, pad_to_multiple_of=8, return_tensors="pt", padding=True
+        # ),
+        data_collator=transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False),
     )
     model.config.use_cache = False  # sssssssilence the warnings. Please re-enable for inference!
     result = trainer.train()
