@@ -34,8 +34,8 @@ then
      -genv KMP_AFFINITY="granularity=fine,none" \
      -genv KMP_BLOCKTIME=1 \
      -genv TF_ENABLE_ONEDNN_OPTS=1 \
-     python python/llm/example/CPU/QLoRA-FineTuning/qlora_finetuning_cpu.py$MODEL_PARAM $DATA_PARAM
+     python qlora_finetuning_cpu.py$MODEL_PARAM $DATA_PARAM
 else
-  python python/llm/example/CPU/QLoRA-FineTuning/qlora_finetuning_cpu.py $MODEL_PARAM $DATA_PARAM
+  python qlora_finetuning_cpu.py $MODEL_PARAM $DATA_PARAM
 fi
 
