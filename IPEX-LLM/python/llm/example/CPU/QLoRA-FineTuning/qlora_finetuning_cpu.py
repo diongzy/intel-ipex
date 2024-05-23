@@ -44,19 +44,21 @@ if __name__ == "__main__":
     model_path = args.repo_id_or_model_path
     dataset_path = args.dataset
     tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+    
+    dataset=load_dataset('csv', data_files={'train':'train.csv', 'val':'val.csv'})
 
-    if dataset_path.endswith(".json") or dataset_path.endswith(".jsonl"):
-        data = load_dataset("json", data_files=dataset_path)
-    else:
-        data = load_dataset(dataset_path)
+    #if dataset_path.endswith(".json") or dataset_path.endswith(".jsonl"):
+    #    data = load_dataset("json", data_files=dataset_path)
+    #else:
+    #    data = load_dataset(dataset_path)
 
     # For illustration purpose, only use part of data to train
-    data = data["train"].train_test_split(train_size=0.1, shuffle=False)
+    #data = data["train"].train_test_split(train_size=0.1, shuffle=False)
 
-    # Data processing
-    prompter = Prompter("alpaca")
-    train_data, _ = get_train_val_data(data, tokenizer, prompter, train_on_inputs=True,
-                                       add_eos_token=False, cutoff_len=256, val_set_size=0, seed=42)
+    ### Data processing
+    #prompter = Prompter("alpaca")
+    #train_data, _ = get_train_val_data(data, tokenizer, prompter, train_on_inputs=True,
+    #                                   add_eos_token=False, cutoff_len=256, val_set_size=0, seed=42)
 
 
     bnb_config = BitsAndBytesConfig(
@@ -97,7 +99,8 @@ if __name__ == "__main__":
     
     trainer = transformers.Trainer(
         model=model,
-        train_dataset=train_data,
+        train_dataset=dataset["train"],
+        eval_dataset= dataset["val"],
         args=transformers.TrainingArguments(
             per_device_train_batch_size=16,
             gradient_accumulation_steps=2,
