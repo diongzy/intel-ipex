@@ -93,7 +93,7 @@ if __name__ == "__main__":
         peft_config=config,
         max_seq_length=2500,
         args=transformers.TrainingArguments(
-            per_device_train_batch_size=16,
+            per_device_train_batch_size=4,
             gradient_accumulation_steps=2,
             warmup_steps=0.03,  # This might still need to be specified in steps, not epochs
             num_train_epochs=9,  # Specify the number of epochs directly
