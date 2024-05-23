@@ -26,6 +26,7 @@ from ipex_llm.transformers import AutoModelForCausalLM
 from datasets import load_dataset
 import argparse
 from ipex_llm.utils.isa_checker import ISAChecker
+from trl import SFTTrainer
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 common_util_path = os.path.join(current_dir, '..', '..', 'GPU', 'LLM-Finetuning')
@@ -83,12 +84,12 @@ if __name__ == "__main__":
     # To avoid only one core is used on client CPU
     isa_checker = ISAChecker()
     bf16_flag = isa_checker.check_avx512()
-    
-    trainer = transformers.Trainer(
+
+    trainer = transformers.SFTTrainer(
         model=model,
         train_dataset=dataset["train"],
         eval_dataset= dataset["val"],
-        # dataset_text_field="prompt",
+        dataset_text_field="prompt",
         args=transformers.TrainingArguments(
             per_device_train_batch_size=16,
             gradient_accumulation_steps=2,
