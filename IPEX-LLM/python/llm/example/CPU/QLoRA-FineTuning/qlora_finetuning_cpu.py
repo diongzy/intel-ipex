@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
-        bnb_4bit_use_double_quant=False,
+        bnb_4bit_use_double_quant=True,
         bnb_4bit_quant_type="int4",  # nf4 not supported on cpu yet
         bnb_4bit_compute_dtype=torch.bfloat16
     )
@@ -80,9 +80,9 @@ if __name__ == "__main__":
     model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=False)
     model.enable_input_require_grads()
     config = LoraConfig(
-        r=8,
-        lora_alpha=32,
-        target_modules=["q_proj", "k_proj", "v_proj"],
+        r=16,
+        lora_alpha=16,
+        target_modules= "all-linear",
         lora_dropout=0.05,
         bias="none",
         task_type="CAUSAL_LM"
@@ -99,16 +99,17 @@ if __name__ == "__main__":
         model=model,
         train_dataset=train_data,
         args=transformers.TrainingArguments(
-            per_device_train_batch_size=4,
-            gradient_accumulation_steps=1,
-            warmup_steps=20,
-            max_steps=200,
+            per_device_train_batch_size=16,
+            gradient_accumulation_steps=2,
+            warmup_steps=0.03,  # This might still need to be specified in steps, not epochs
+            num_train_epochs=9,  # Specify the number of epochs directly
             learning_rate=2e-4,
-            save_steps=100,
-            bf16=bf16_flag,
-            logging_steps=20,
+            logging_steps=10,  # Logs every 10 steps, you can also use `logging_strategy='Epoch'`
             output_dir="outputs",
-            optim="adamw_hf",  # paged_adamw_8bit is not supported yet
+            optim="paged_adamw_8bit",
+            evaluation_strategy="epoch",  # Evaluates at the end of each epoch
+            save_strategy="epoch",  # Saves at the end of each epoch
+            load_best_model_at_end=True,  # Optional: load the best model at the end of training
             # gradient_checkpointing=True, # can further reduce memory but slower
         ),
         # Inputs are dynamically padded to the maximum length of a batch
