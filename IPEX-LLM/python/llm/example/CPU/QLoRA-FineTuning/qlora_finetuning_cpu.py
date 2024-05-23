@@ -85,7 +85,7 @@ if __name__ == "__main__":
     isa_checker = ISAChecker()
     bf16_flag = isa_checker.check_avx512()
 
-    trainer = transformers.SFTTrainer(
+    trainer = SFTTrainer(
         model=model,
         train_dataset=dataset["train"],
         eval_dataset= dataset["val"],
