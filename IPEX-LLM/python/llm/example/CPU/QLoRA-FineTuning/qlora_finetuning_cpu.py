@@ -108,6 +108,6 @@ if __name__ == "__main__":
             tokenizer, pad_to_multiple_of=8, return_tensors="pt", padding=True
         ),
     )
-    model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
+    model.config.use_cache = False  # sssssssilence the warnings. Please re-enable for inference!
     result = trainer.train()
     print(result)
