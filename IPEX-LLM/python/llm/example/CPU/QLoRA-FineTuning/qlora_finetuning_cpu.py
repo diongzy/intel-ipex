@@ -47,7 +47,6 @@ if __name__ == "__main__":
     
     dataset=load_dataset('csv', data_files={'train':'train.csv', 'val':'val.csv'})
 
-
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_use_double_quant=True,
@@ -56,7 +55,6 @@ if __name__ == "__main__":
     )
     model = AutoModelForCausalLM.from_pretrained(model_path,
                                                  quantization_config=bnb_config, )
-
 
 
     # below is also supported
