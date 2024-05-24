@@ -84,7 +84,26 @@ if __name__ == "__main__":
     # To avoid only one core is used on client CPU
     isa_checker = ISAChecker()
     bf16_flag = isa_checker.check_avx512()
+    from transformers import TrainerCallback, TrainingArguments
+    import time
 
+    class EpochTimeCallback(TrainerCallback):
+        def __init__(self):
+            self.epoch_start_time = None
+            self.epoch_times = []
+
+        def on_epoch_begin(self, args, state, control, **kwargs):
+            self.epoch_start_time = time.time()
+
+        def on_epoch_end(self, args, state, control, **kwargs):
+            epoch_end_time = time.time()
+            epoch_duration = epoch_end_time - self.epoch_start_time
+            self.epoch_times.append(epoch_duration)
+            print(f"Epoch {state.epoch} took {epoch_duration:.2f} seconds")
+
+        def get_epoch_times(self):
+            return self.epoch_times
+    epoch_time_callback = EpochTimeCallback()
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset["train"],
@@ -111,6 +130,7 @@ if __name__ == "__main__":
         #     tokenizer, pad_to_multiple_of=8, return_tensors="pt", padding=True
         # ),
         data_collator=transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False),
+        callbacks=[epoch_time_callback]  # Add the custom callback here
     )
     model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
     result = trainer.train()
