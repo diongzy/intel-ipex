@@ -89,7 +89,7 @@ if __name__ == "__main__":
         model=model,
         train_dataset=dataset["train"],
         eval_dataset= dataset["val"],
-        dataset_text_field="llama_prompt",
+        dataset_text_field="mistral_prompt",
         peft_config=config,
         max_seq_length=2500,
         args=transformers.TrainingArguments(
@@ -112,6 +112,6 @@ if __name__ == "__main__":
         # ),
         data_collator=transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False),
     )
-    model.config.use_cache = False  # sssssssilence the warnings. Please re-enable for inference!
+    model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
     result = trainer.train()
     print(result)
