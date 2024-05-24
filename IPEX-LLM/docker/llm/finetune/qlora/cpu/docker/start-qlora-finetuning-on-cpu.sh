@@ -10,9 +10,9 @@ source ipex-llm-init -t
 # Set the Hugging Face token
 # HF_TOKEN="--auth-token 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"
 
-if [ -d "/home/qmed-intel/models/meta-llama/Meta-Llama-3-8B-Instruct" ];
+if [ -d "/home/qmed-intel/models/mistral_instruct" ];
 then
-  MODEL_PARAM="--repo-id-or-model-path /home/qmed-intel/models/meta-llama/Meta-Llama-3-8B-Instruct"  # otherwise, default to download from HF repo
+  MODEL_PARAM="--repo-id-or-model-path "/home/qmed-intel/models/mistral_instruct" "  # otherwise, default to download from HF repo
 fi
 
 if [ -d "/home/qmed-intel/Desktop/qmed_summarisation_data" ];
