@@ -103,19 +103,22 @@ if __name__ == "__main__":
 
         def get_epoch_times(self):
             return self.epoch_times
+        
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side='right'
     epoch_time_callback = EpochTimeCallback()
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset["train"],
         eval_dataset= dataset["val"],
-        dataset_text_field="mistral_prompt",
+        dataset_text_field="llama_prompt",
         peft_config=config,
         max_seq_length=2500,
         args=transformers.TrainingArguments(
             per_device_train_batch_size=4,
             gradient_accumulation_steps=2,
             warmup_steps=0.03,  # This might still need to be specified in steps, not epochs
-            num_train_epochs=9,  # Specify the number of epochs directly
+            num_train_epochs=8,  # Specify the number of epochs directly
             learning_rate=2e-4,
             logging_steps=10,  # Logs every 10 steps, you can also use `logging_strategy='Epoch'`
             output_dir="outputs",
