@@ -27,6 +27,7 @@ from datasets import load_dataset
 import argparse
 from ipex_llm.utils.isa_checker import ISAChecker
 from trl import SFTTrainer
+import wandb
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 common_util_path = os.path.join(current_dir, '..', '..', 'GPU', 'LLM-Finetuning')
@@ -78,8 +79,6 @@ if __name__ == "__main__":
         task_type="CAUSAL_LM"
     )
     model = get_peft_model(model, config)
-    tokenizer.pad_token_id = 0
-    tokenizer.padding_side = "left"
     
     # To avoid only one core is used on client CPU
     isa_checker = ISAChecker()
@@ -107,6 +106,9 @@ if __name__ == "__main__":
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side='right'
     epoch_time_callback = EpochTimeCallback()
+
+    ## Wandb
+    wandb.init(project="NORA Intel", entity="qmed-asia")
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset["train"],
@@ -126,6 +128,7 @@ if __name__ == "__main__":
             evaluation_strategy="epoch",  # Evaluates at the end of each epoch
             save_strategy="epoch",  # Saves at the end of each epoch
             load_best_model_at_end=True,  # Optional: load the best model at the end of training
+            report_to="wandb", # Log to wandb
             # gradient_checkpointing=True, # can further reduce memory but slower
         ),
         # Inputs are dynamically padded to the maximum length of a batch
@@ -137,4 +140,5 @@ if __name__ == "__main__":
     )
     model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
     result = trainer.train()
+    wandb.finish()
     print(result)

@@ -13,6 +13,8 @@ FROM mpioperator/intel as builder
 
 
 ENV TZ=Asia/Shanghai
+##wandb
+ENV WANDB_API_KEY= '2bd9da9f8c9031d1a7bdddb45f3bdf84f3139346'
 ARG PIP_NO_CACHE_DIR=false
 ENV TRANSFORMERS_COMMIT_ID=95fe0f5
 
@@ -55,6 +57,8 @@ RUN mkdir -p /ipex_llm/data && mkdir -p /ipex_llm/model && \
     pip install accelerate==0.23.0 && \
     pip install bitsandbytes && \
     pip install trl && \
+    # install wandb for CPU monitoring
+    pip install wandb
     # get qlora example code
     cd /ipex_llm && \
     git clone https://github.com/diongzy/intel-ipex.git && \
