@@ -14,7 +14,7 @@ FROM mpioperator/intel as builder
 
 ENV TZ=Asia/Shanghai
 ##wandb
-ENV WANDB_API_KEY= 2bd9da9f8c9031d1a7bdddb45f3bdf84f3139346
+ENV WANDB_API_KEY=2bd9da9f8c9031d1a7bdddb45f3bdf84f3139346
 ARG PIP_NO_CACHE_DIR=false
 ENV TRANSFORMERS_COMMIT_ID=95fe0f5
 
