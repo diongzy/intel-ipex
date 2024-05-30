@@ -6,12 +6,16 @@ export SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=1
 source /opt/intel/oneapi/setvars.sh
 export CPU_CORES=$(nproc)
 source ipex-llm-init -t
+export WANDB_API_KEY='2bd9da9f8c9031d1a7bdddb45f3bdf84f3139346'
 
+# Login to wandb
+wandb login $WANDB_API_KEY
 # Set the Hugging Face token
 # HF_TOKEN="--auth-token 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"
 
 # if [ -d "/home/qmed-intel/models/mistral_instruct" ];
 # then
+#   MODEL_PARAM="--repo-id-or-model-path "/home/qmed-intel/models/mistral_instruct" "  # otherwise, default to download from HF repo
 # fi
 
 if [ -d "/home/qmed-intel/models/llama_instruct" ];
