@@ -60,8 +60,7 @@ if __name__ == "__main__":
         bnb_4bit_quant_type="int4",  # nf4 not supported on cpu yet
         bnb_4bit_compute_dtype=torch.bfloat16
     )
-    model = AutoModelForCausalLM.from_pretrained(model_path,
-                                                 quantization_config=bnb_config, )
+    model = AutoModelForCausalLM.from_pretrained(model_path,quantization_config=bnb_config, device_map='cpu')
 
 
     # below is also supported
