@@ -1,0 +1,5 @@
+{
+
+    "prompt": "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{Prompt}\n<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{Input}\n<|eot_id|><|start_header_id|>system<|end_header_id|>\n\n{Summary}<|eot_id|>"
+
+}
