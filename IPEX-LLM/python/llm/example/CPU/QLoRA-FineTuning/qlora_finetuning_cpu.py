@@ -19,21 +19,20 @@ import os
 
 import transformers
 from transformers import LlamaTokenizer, AutoTokenizer
+from transformers import BitsAndBytesConfig
 
-## USE FOR Transformers
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-from peft import LoraConfig, PeftModel, prepare_model_for_kbit_training, get_peft_model
-
-##Use for Ipex-llm transformers
-from ipex_llm.transformers.qlora import get_peft_model, prepare_model_for_kbit_training, LoraConfig
-from ipex_llm.transformers import AutoModelForCausalLM
+# ##For ipex-llm runs
+# from ipex_llm.transformers.qlora import get_peft_model, prepare_model_for_kbit_training, LoraConfig
+# from ipex_llm.transformers import AutoModelForCausalLM
+## For raw transformers run
+from peft import get_peft_model, prepare_model_for_kbit_training, LoraConfig
+from transformers import AutoModelForCausalLM
 
 
 from datasets import load_dataset
 import argparse
 from ipex_llm.utils.isa_checker import ISAChecker
 from trl import SFTTrainer
-import wandb
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 common_util_path = os.path.join(current_dir, '..', '..', 'GPU', 'LLM-Finetuning')
@@ -86,9 +85,9 @@ if __name__ == "__main__":
     )
     model = get_peft_model(model, config)
     
-    # # To avoid only one core is used on client CPU
-    # isa_checker = ISAChecker()
-    # bf16_flag = isa_checker.check_avx512()
+    # To avoid only one core is used on client CPU
+    isa_checker = ISAChecker()
+    bf16_flag = isa_checker.check_avx512()
     from transformers import TrainerCallback, TrainingArguments
     import time
 
@@ -146,5 +145,4 @@ if __name__ == "__main__":
     )
     model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
     result = trainer.train()
-    wandb.finish()
     print(result)
