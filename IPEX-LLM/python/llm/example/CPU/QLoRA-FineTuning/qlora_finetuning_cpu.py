@@ -20,9 +20,15 @@ import os
 import transformers
 from transformers import LlamaTokenizer, AutoTokenizer
 
-from transformers import BitsAndBytesConfig
+## USE FOR Transformers
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from peft import LoraConfig, PeftModel, prepare_model_for_kbit_training, get_peft_model
+
+##Use for Ipex-llm transformers
 from ipex_llm.transformers.qlora import get_peft_model, prepare_model_for_kbit_training, LoraConfig
 from ipex_llm.transformers import AutoModelForCausalLM
+
+
 from datasets import load_dataset
 import argparse
 from ipex_llm.utils.isa_checker import ISAChecker
@@ -80,9 +86,9 @@ if __name__ == "__main__":
     )
     model = get_peft_model(model, config)
     
-    # To avoid only one core is used on client CPU
-    isa_checker = ISAChecker()
-    bf16_flag = isa_checker.check_avx512()
+    # # To avoid only one core is used on client CPU
+    # isa_checker = ISAChecker()
+    # bf16_flag = isa_checker.check_avx512()
     from transformers import TrainerCallback, TrainingArguments
     import time
 
