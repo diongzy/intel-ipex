@@ -16,7 +16,7 @@
 
 import torch
 import os
-
+import wandb
 import transformers
 from transformers import LlamaTokenizer, AutoTokenizer
 from transformers import BitsAndBytesConfig
