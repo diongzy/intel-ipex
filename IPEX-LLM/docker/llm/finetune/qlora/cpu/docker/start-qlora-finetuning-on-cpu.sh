@@ -8,8 +8,8 @@ export CPU_CORES=$(nproc)
 source ipex-llm-init -t
 export WANDB_API_KEY='2bd9da9f8c9031d1a7bdddb45f3bdf84f3139346'
 ##For AMX 
-export ONEDNN_MAX_CPU_ISA=AVX512_CORE_AMX #then comment out J
-# ## For Jemmaloc (1)
+export ONEDNN_MAX_CPU_ISA=AVX512_CORE_AMX 
+# ## For Jemmaloc 
 # export ONEDNN_MAX_CPU_ISA=AVX512_CORE_VNNI
 ## For Jemmaloc or Jem + AMX
 export LD_PRELOAD=/usr/local/lib/libjemalloc.so
