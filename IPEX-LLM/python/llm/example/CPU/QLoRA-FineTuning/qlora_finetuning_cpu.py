@@ -126,6 +126,7 @@ if __name__ == "__main__":
             warmup_steps=0.03,  # This might still need to be specified in steps, not epochs
             num_train_epochs=8,  # Specify the number of epochs directly
             learning_rate=2e-4,
+            bf16=bf16_flag
             logging_steps=10,  # Logs every 10 steps, you can also use `logging_strategy='Epoch'`
             output_dir="outputs",
             optim="adamw_hf",
