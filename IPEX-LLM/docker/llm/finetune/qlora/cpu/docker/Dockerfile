@@ -66,16 +66,11 @@ RUN mkdir -p /ipex_llm/data && mkdir -p /ipex_llm/model && \
     mkdir -p /GPU/LLM-Finetuning && \
     mv intel-ipex/IPEX-LLM/python/llm/example/GPU/LLM-Finetuning/common /GPU/LLM-Finetuning/common && \
     rm -r intel-ipex && \
-    # Install jemalloc
-    apt-get update && \
-    apt-get install -y autoconf gcc make && \
-    git clone https://github.com/jemalloc/jemalloc.git && \
-    cd jemalloc && \
-    ./autogen.sh && \
-    make && \
-    make install && \
-    cd .. && \
-    rm -rf jemalloc
+    
+
+
+# Generate requirements.txt file
+RUN pip freeze > /ipex_llm/requirements.txt
 
 # for standalone
 COPY ./start-qlora-finetuning-on-cpu.sh /ipex_llm/start-qlora-finetuning-on-cpu.sh
@@ -83,7 +78,5 @@ RUN chown -R mpiuser /ipex_llm
 
 USER mpiuser
 
-# Set environment variables for jemalloc
-ENV LD_PRELOAD=/usr/local/lib/libjemalloc.so
 
 ENTRYPOINT ["/bin/bash"]
