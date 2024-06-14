@@ -65,7 +65,7 @@ RUN mkdir -p /ipex_llm/data && mkdir -p /ipex_llm/model && \
     mv intel-ipex/IPEX-LLM/python/llm/example/CPU/QLoRA-FineTuning/* . && \
     mkdir -p /GPU/LLM-Finetuning && \
     mv intel-ipex/IPEX-LLM/python/llm/example/GPU/LLM-Finetuning/common /GPU/LLM-Finetuning/common && \
-    rm -r intel-ipex && \
+    rm -r intel-ipex 
     
 
 
