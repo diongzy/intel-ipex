@@ -5,24 +5,18 @@ export USE_XETLA=OFF
 export SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=1
 source /opt/intel/oneapi/setvars.sh
 export CPU_CORES=$(nproc)
-# source ipex-llm-init -t
+##For tcmalloc runs
+source ipex-llm-init -t
 export WANDB_API_KEY='2bd9da9f8c9031d1a7bdddb45f3bdf84f3139346'
-##For AMX 
-# export ONEDNN_MAX_CPU_ISA=AVX512_CORE_AMX 
+##For AMX runs
+export ONEDNN_MAX_CPU_ISA=AVX512_CORE_AMX 
+##Uncomment for ipex+tcmalloc wout AMX run and ipex only runs
+#export ONEDNN_MAX_CPU_ISA=AVX512_CORE_VNNI
 
-export ONEDNN_MAX_CPU_ISA=AVX512_CORE_VNNI
-# ## For Jemmaloc or Jem + AMX
-# export LD_PRELOAD=/usr/local/lib/libjemalloc.so
-# export MALLOC_CONF="oversize_threshold:1,background_thread:true,metadata_thp:auto,dirty_decay_ms:60000,muzzy_decay_ms:-1"
 # Login to wandb
 wandb login $WANDB_API_KEY
 # Set the Hugging Face token
-# HF_TOKEN="--auth-token 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"
-
-# if [ -d "/home/qmed-intel/models/mistral_instruct" ];
-# then
-#   MODEL_PARAM="--repo-id-or-model-path "/home/qmed-intel/models/mistral_instruct" "  # otherwise, default to download from HF repo
-# fi
+HF_TOKEN="--auth-token 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"
 
 if [ -d "/home/qmed-intel/models/llama_instruct" ];
 then
