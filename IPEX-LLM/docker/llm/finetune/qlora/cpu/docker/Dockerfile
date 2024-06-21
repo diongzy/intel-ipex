@@ -68,10 +68,6 @@ RUN mkdir -p /ipex_llm/data && mkdir -p /ipex_llm/model && \
     rm -r intel-ipex 
     
 
-
-# Generate requirements.txt file
-RUN pip freeze > /ipex_llm/requirements.txt
-
 # for standalone
 COPY ./start-qlora-finetuning-on-cpu.sh /ipex_llm/start-qlora-finetuning-on-cpu.sh
 RUN chown -R mpiuser /ipex_llm
