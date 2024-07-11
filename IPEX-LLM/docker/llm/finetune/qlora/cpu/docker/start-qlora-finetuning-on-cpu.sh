@@ -4,6 +4,7 @@ cd /ipex_llm
 export USE_XETLA=OFF
 export SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=1
 source /opt/intel/oneapi/setvars.sh
+export OMP_NUM_THREADS=128
 export CPU_CORES=$(nproc)
 ##For tcmalloc runs
 source ipex-llm-init -t
