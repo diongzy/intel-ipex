@@ -7,7 +7,7 @@ source /opt/intel/oneapi/setvars.sh
 export CPU_CORES=$(nproc)
 ##For tcmalloc runs
 source ipex-llm-init -t
-export WANDB_API_KEY='xxxxxxx'
+export WANDB_API_KEY='2bd9da9f8c9031d1a7bdddb45f3bdf84f3139346'
 ##For AMX runs
 export ONEDNN_MAX_CPU_ISA=AVX512_CORE_AMX 
 ##Uncomment for ipex+tcmalloc wout AMX run and ipex only runs
@@ -16,7 +16,7 @@ export ONEDNN_MAX_CPU_ISA=AVX512_CORE_AMX
 # Login to wandb
 wandb login $WANDB_API_KEY
 # Set the Hugging Face token
-HF_TOKEN="--auth-token yyyyyy"
+HF_TOKEN="--auth-token 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"
 
 if [ -d "/home/qmed-intel/models/llama_instruct" ];
 then
