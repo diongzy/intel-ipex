@@ -1,0 +1,2679 @@
+{
+  "Analyze": {
+    "Code Path Frequency": [
+      {
+        "Java Paths": "",
+        "System Paths": ""
+      }
+    ]
+  },
+  "Brief": {
+    "Accelerator": [
+      {
+        "Accelerators Available [used]": "DLB 0 [0], DSA 2 [0], IAA 0 [0], QAT 0 [0]"
+      }
+    ],
+    "BIOS": [
+      {
+        "BIOS": "SE5C741.86B.01.01.0004.2303280404"
+      }
+    ],
+    "Baseboard": [
+      {
+        "Baseboard": "Intel Corporation M50FCP2SBSTD"
+      }
+    ],
+    "CPU": [
+      {
+        "All-core Maximum Frequency": "2.6GHz",
+        "Base Frequency": "1.9GHz",
+        "CPU Model": "Intel(R) Xeon(R) Gold 6430L",
+        "CPUs": "128",
+        "Cores per Socket": "32",
+        "Hyperthreading": "Enabled",
+        "Intel Turbo Boost": "Enabled",
+        "Maximum Frequency": "3.4GHz",
+        "Microarchitecture": "SPR_XCC",
+        "NUMA Nodes": "2",
+        "PPINs": "",
+        "Prefetchers": "L2 HW: Enabled, L2 Adj.: Enabled, DCU HW: Enabled, DCU IP: Enabled, AMP: Disabled, Homeless: Disabled, LLC: Disabled",
+        "Sockets": "2"
+      }
+    ],
+    "Chassis": [
+      {
+        "Chassis": "............................... Rack Mount Chassis"
+      }
+    ],
+    "Disk": [
+      {
+        "Disk": "1x 894.3G Micron_7450_MTFDKBA960TFR, 1x 894.3G SAMSUNG MZQL2960HCJR-00A07"
+      }
+    ],
+    "Host": [
+      {
+        "Name": "qmed",
+        "Time": "Selasa 25 Jun 2024 02:56:45  UTC"
+      }
+    ],
+    "Marketing Claim": [
+      {
+        "System Summary": "1-node, 2x Intel(R) Xeon(R) Gold 6430L, 32 cores, HT On, Turbo On, NUMA 2, Integrated Accelerators Available [used]: DLB 0 [0], DSA 2 [0], IAA 0 [0], QAT 0 [0], Total Memory 512GB (16x32GB DDR5 4800 MT/s [4400 MT/s]), BIOS SE5C741.86B.01.01.0004.2303280404, microcode 0x2b0004d0, 2x BCM57416 NetXtreme-E Dual-Media 10G RDMA Ethernet Controller, 2x BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller, 1x 894.3G Micron_7450_MTFDKBA960TFR, 1x 894.3G SAMSUNG MZQL2960HCJR-00A07, Ubuntu 22.04.4 LTS, 6.5.0-28-generic. Software: WORKLOAD+VERSION, COMPILER, LIBRARIES, OTHER_SW. Test by Intel as of 06/25/24."
+      }
+    ],
+    "Memory": [
+      {
+        "Automatic NUMA Balancing": "Enabled",
+        "Hugepagesize": "2048 kB",
+        "Installed Memory": "512GB (16x32GB DDR5 4800 MT/s [4400 MT/s])",
+        "Transparent Huge Pages": "madvise"
+      }
+    ],
+    "NIC": [
+      {
+        "NIC": "2x BCM57416 NetXtreme-E Dual-Media 10G RDMA Ethernet Controller, 2x BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller"
+      }
+    ],
+    "OS": [
+      {
+        "Kernel": "6.5.0-28-generic",
+        "Microcode": "0x2b0004d0",
+        "OS": "Ubuntu 22.04.4 LTS"
+      }
+    ],
+    "Power": [
+      {
+        "Frequency Driver": "intel_pstate",
+        "Frequency Governor": "powersave",
+        "Max C-State": "9",
+        "Power \u0026 Perf Policy": "Normal Powersave (7)",
+        "TDP": "270 watts"
+      }
+    ],
+    "System": [
+      {
+        "System": "Intel Corporation M50FCP2SBSTD"
+      }
+    ],
+    "Vulnerability": [
+      {
+        "Vulnerability": "CVE-2017-5715:OK, CVE-2017-5753:OK, CVE-2017-5754:OK, CVE-2018-12126:OK, CVE-2018-12127:OK, CVE-2018-12130:OK, CVE-2018-12207:OK, CVE-2018-3615:OK, CVE-2018-3620:OK, CVE-2018-3639:OK, CVE-2018-3640:OK, CVE-2018-3646:OK, CVE-2019-11091:OK, CVE-2019-11135:OK, CVE-2020-0543:OK, CVE-2022-40982:OK, CVE-2023-20569:OK, CVE-2023-20593:OK, CVE-2023-23583:OK"
+      }
+    ]
+  },
+  "Configuration": {
+    "Accelerator": [
+      {
+        "Count": "0",
+        "Description": "hardware managed system of queues and arbiters connecting producers and consumers",
+        "Full Name": "Intel Dynamic Load Balancer",
+        "Name": "DLB",
+        "Work Queues": "N/A"
+      },
+      {
+        "Count": "2",
+        "Description": "a high-performance data copy and transformation accelerator",
+        "Full Name": "Intel Data Streaming Accelerator",
+        "Name": "DSA",
+        "Work Queues": "None"
+      },
+      {
+        "Count": "0",
+        "Description": "accelerates compression and decompression for big data applications and in-memory analytic databases",
+        "Full Name": "Intel Analytics Accelerator",
+        "Name": "IAA",
+        "Work Queues": "None"
+      },
+      {
+        "Count": "0",
+        "Description": "accelerates data encryption and compression for applications from networking to enterprise, cloud to storage, and content delivery to database",
+        "Full Name": "Intel Quick Assist Technology",
+        "Name": "QAT (on CPU)",
+        "Work Queues": "N/A"
+      },
+      {
+        "Count": "0",
+        "Description": "accelerates data encryption and compression for applications from networking to enterprise, cloud to storage, and content delivery to database",
+        "Full Name": "Intel Quick Assist Technology",
+        "Name": "QAT (on chipset)",
+        "Work Queues": "N/A"
+      }
+    ],
+    "BIOS": [
+      {
+        "Release Date": "03/28/2023",
+        "Vendor": "Intel Corporation",
+        "Version": "SE5C741.86B.01.01.0004.2303280404"
+      }
+    ],
+    "Baseboard": [
+      {
+        "Manufacturer": "Intel Corporation",
+        "Product Name": "M50FCP2SBSTD",
+        "Serial #": "BQFX30200034",
+        "Version": "M36359-350"
+      }
+    ],
+    "CPU": [
+      {
+        "All-core Maximum Frequency": "2.6GHz",
+        "Architecture": "x86_64",
+        "Base Frequency": "1.9GHz",
+        "CPU Model": "Intel(R) Xeon(R) Gold 6430L",
+        "CPUs": "128",
+        "Cores per Socket": "32",
+        "Family": "6",
+        "Hyperthreading": "Enabled",
+        "Intel Turbo Boost": "Enabled",
+        "L1d Cache": "3 MiB (64 instances)",
+        "L1i Cache": "2 MiB (64 instances)",
+        "L2 Cache": "128 MiB (64 instances)",
+        "L3 Cache": "120 MiB",
+        "L3 per Core": "1.875 MiB",
+        "Maximum Frequency": "3.4GHz",
+        "Memory Channels": "8",
+        "Microarchitecture": "SPR_XCC",
+        "Model": "143",
+        "NUMA CPU List": "0-31,64-95 :: 32-63,96-127",
+        "NUMA Nodes": "2",
+        "On-line CPU List": "0-127",
+        "PPINs": "",
+        "Prefetchers": "L2 HW: Enabled, L2 Adj.: Enabled, DCU HW: Enabled, DCU IP: Enabled, AMP: Disabled, Homeless: Disabled, LLC: Disabled",
+        "Sockets": "2",
+        "Stepping": "7",
+        "Virtualization": ""
+      }
+    ],
+    "Chassis": [
+      {
+        "Manufacturer": "...............................",
+        "Serial #": "..................",
+        "Type": "Rack Mount Chassis",
+        "Version": ".................."
+      }
+    ],
+    "Chassis Status": [
+      {
+        "Cooling/Fan Fault": "false",
+        "Drive Fault": "false",
+        "Last Power Event": "ac-failed",
+        "Main Power Fault": "false",
+        "Power Overload": "false",
+        "Power Restore Policy": "always-off",
+        "System Time": "06/25/24 10:56:44 +08"
+      }
+    ],
+    "DIMM": [
+      {
+        "Bank Locator": "NODE 0",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_A1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E5FC5",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 0",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_A2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 0",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_B1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E394F",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 0",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_B2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 1",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_C1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E61A3",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 1",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_C2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 1",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_D1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E4802",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 1",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_D2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 2",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_E1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3F47",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 2",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_E2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 2",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_F1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3FFD",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 2",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_F2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 3",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_G1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3E10",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 3",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_G2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 3",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_H1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E6235",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 3",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_H2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 4",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_A1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E64BD",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 4",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_A2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 4",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_B1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3822",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 4",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_B2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 5",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_C1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E6231",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 5",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_C2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 5",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_D1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3FFB",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 5",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_D2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 6",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_E1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E377D",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 6",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_E2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 6",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_F1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E61FD",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 6",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_F2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 7",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_G1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3CFB",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 7",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_G2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 7",
+        "Configured Speed": "4400 MT/s",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_H1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3A52",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 7",
+        "Configured Speed": "",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_H2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      }
+    ],
+    "DIMM Population": [
+      {
+        "Bank Locator": "NODE 0",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "0",
+        "Derived Slot": "0",
+        "Derived Socket": "0",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_A1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E5FC5",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 0",
+        "Configured Speed": "",
+        "Derived Channel": "0",
+        "Derived Slot": "1",
+        "Derived Socket": "0",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_A2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 0",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "1",
+        "Derived Slot": "0",
+        "Derived Socket": "0",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_B1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E394F",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 0",
+        "Configured Speed": "",
+        "Derived Channel": "1",
+        "Derived Slot": "1",
+        "Derived Socket": "0",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_B2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 1",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "2",
+        "Derived Slot": "0",
+        "Derived Socket": "0",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_C1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E61A3",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 1",
+        "Configured Speed": "",
+        "Derived Channel": "2",
+        "Derived Slot": "1",
+        "Derived Socket": "0",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_C2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 1",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "3",
+        "Derived Slot": "0",
+        "Derived Socket": "0",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_D1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E4802",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 1",
+        "Configured Speed": "",
+        "Derived Channel": "3",
+        "Derived Slot": "1",
+        "Derived Socket": "0",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_D2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 2",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "4",
+        "Derived Slot": "0",
+        "Derived Socket": "0",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_E1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3F47",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 2",
+        "Configured Speed": "",
+        "Derived Channel": "4",
+        "Derived Slot": "1",
+        "Derived Socket": "0",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_E2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 2",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "5",
+        "Derived Slot": "0",
+        "Derived Socket": "0",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_F1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3FFD",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 2",
+        "Configured Speed": "",
+        "Derived Channel": "5",
+        "Derived Slot": "1",
+        "Derived Socket": "0",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_F2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 3",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "6",
+        "Derived Slot": "0",
+        "Derived Socket": "0",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_G1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3E10",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 3",
+        "Configured Speed": "",
+        "Derived Channel": "6",
+        "Derived Slot": "1",
+        "Derived Socket": "0",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_G2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 3",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "7",
+        "Derived Slot": "0",
+        "Derived Socket": "0",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU0_DIMM_H1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E6235",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 3",
+        "Configured Speed": "",
+        "Derived Channel": "7",
+        "Derived Slot": "1",
+        "Derived Socket": "0",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU0_DIMM_H2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 4",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "0",
+        "Derived Slot": "0",
+        "Derived Socket": "1",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_A1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E64BD",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 4",
+        "Configured Speed": "",
+        "Derived Channel": "0",
+        "Derived Slot": "1",
+        "Derived Socket": "1",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_A2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 4",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "1",
+        "Derived Slot": "0",
+        "Derived Socket": "1",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_B1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3822",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 4",
+        "Configured Speed": "",
+        "Derived Channel": "1",
+        "Derived Slot": "1",
+        "Derived Socket": "1",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_B2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 5",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "2",
+        "Derived Slot": "0",
+        "Derived Socket": "1",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_C1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E6231",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 5",
+        "Configured Speed": "",
+        "Derived Channel": "2",
+        "Derived Slot": "1",
+        "Derived Socket": "1",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_C2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 5",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "3",
+        "Derived Slot": "0",
+        "Derived Socket": "1",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_D1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3FFB",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 5",
+        "Configured Speed": "",
+        "Derived Channel": "3",
+        "Derived Slot": "1",
+        "Derived Socket": "1",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_D2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 6",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "4",
+        "Derived Slot": "0",
+        "Derived Socket": "1",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_E1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E377D",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 6",
+        "Configured Speed": "",
+        "Derived Channel": "4",
+        "Derived Slot": "1",
+        "Derived Socket": "1",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_E2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 6",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "5",
+        "Derived Slot": "0",
+        "Derived Socket": "1",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_F1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E61FD",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 6",
+        "Configured Speed": "",
+        "Derived Channel": "5",
+        "Derived Slot": "1",
+        "Derived Socket": "1",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_F2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 7",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "6",
+        "Derived Slot": "0",
+        "Derived Socket": "1",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_G1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3CFB",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 7",
+        "Configured Speed": "",
+        "Derived Channel": "6",
+        "Derived Slot": "1",
+        "Derived Socket": "1",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_G2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      },
+      {
+        "Bank Locator": "NODE 7",
+        "Configured Speed": "4400 MT/s",
+        "Derived Channel": "7",
+        "Derived Slot": "0",
+        "Derived Socket": "1",
+        "Detail": "Synchronous Registered (Buffered)",
+        "Locator": "CPU1_DIMM_H1",
+        "Manufacturer": "Micron",
+        "Part": "MTC20F2085S1RC48BA1",
+        "Rank": "2",
+        "Serial": "364E3A52",
+        "Size": "32 GB",
+        "Speed": "4800 MT/s",
+        "Type": "DDR5"
+      },
+      {
+        "Bank Locator": "NODE 7",
+        "Configured Speed": "",
+        "Derived Channel": "7",
+        "Derived Slot": "1",
+        "Derived Socket": "1",
+        "Detail": "Unknown Synchronous",
+        "Locator": "CPU1_DIMM_H2",
+        "Manufacturer": "",
+        "Part": "",
+        "Rank": "",
+        "Serial": "",
+        "Size": "No Module Installed",
+        "Speed": "",
+        "Type": "Unknown"
+      }
+    ],
+    "Disk": [
+      {
+        "FSTYPE": "",
+        "FwRev": "",
+        "MIN-IO": "262144",
+        "MODEL": "Micron_7450_MTFDKBA960TFR",
+        "MOUNTPOINT": "",
+        "NAME": "nvme0n1",
+        "RQ-SIZE": "1023",
+        "SIZE": "894.3G"
+      },
+      {
+        "FSTYPE": "vfat",
+        "FwRev": "",
+        "MIN-IO": "262144",
+        "MODEL": "",
+        "MOUNTPOINT": "/boot/efi",
+        "NAME": "nvme0n1p1",
+        "RQ-SIZE": "1023",
+        "SIZE": "868M"
+      },
+      {
+        "FSTYPE": "ntfs",
+        "FwRev": "",
+        "MIN-IO": "262144",
+        "MODEL": "",
+        "MOUNTPOINT": "",
+        "NAME": "nvme0n1p2",
+        "RQ-SIZE": "1023",
+        "SIZE": "1.5G"
+      },
+      {
+        "FSTYPE": "",
+        "FwRev": "",
+        "MIN-IO": "262144",
+        "MODEL": "",
+        "MOUNTPOINT": "",
+        "NAME": "nvme0n1p3",
+        "RQ-SIZE": "1023",
+        "SIZE": "16M"
+      },
+      {
+        "FSTYPE": "ntfs",
+        "FwRev": "",
+        "MIN-IO": "262144",
+        "MODEL": "",
+        "MOUNTPOINT": "",
+        "NAME": "nvme0n1p4",
+        "RQ-SIZE": "1023",
+        "SIZE": "891.9G"
+      },
+      {
+        "FSTYPE": "",
+        "FwRev": "",
+        "MIN-IO": "131072",
+        "MODEL": "SAMSUNG MZQL2960HCJR-00A07",
+        "MOUNTPOINT": "",
+        "NAME": "nvme1n1",
+        "RQ-SIZE": "1023",
+        "SIZE": "894.3G"
+      },
+      {
+        "FSTYPE": "",
+        "FwRev": "",
+        "MIN-IO": "131072",
+        "MODEL": "",
+        "MOUNTPOINT": "",
+        "NAME": "nvme1n1p1",
+        "RQ-SIZE": "1023",
+        "SIZE": "16M"
+      },
+      {
+        "FSTYPE": "vfat",
+        "FwRev": "",
+        "MIN-IO": "131072",
+        "MODEL": "",
+        "MOUNTPOINT": "",
+        "NAME": "nvme1n1p2",
+        "RQ-SIZE": "1023",
+        "SIZE": "513M"
+      },
+      {
+        "FSTYPE": "ext4",
+        "FwRev": "",
+        "MIN-IO": "131072",
+        "MODEL": "",
+        "MOUNTPOINT": "/",
+        "NAME": "nvme1n1p3",
+        "RQ-SIZE": "1023",
+        "SIZE": "893.7G"
+      }
+    ],
+    "Filesystem": [
+      {
+        "Avail": "51G",
+        "Filesystem": "tmpfs",
+        "Mount Options": "rw,nosuid,nodev,noexec,relatime,size=52809852k,mode=755,inode64",
+        "Mounted on": "/run",
+        "Size": "51G",
+        "Use%": "1%",
+        "Used": "3.9M"
+      },
+      {
+        "Avail": "39G",
+        "Filesystem": "/dev/nvme1n1p3",
+        "Mount Options": "rw,relatime,errors=remount-ro,stripe=32",
+        "Mounted on": "/",
+        "Size": "879G",
+        "Use%": "96%",
+        "Used": "796G"
+      },
+      {
+        "Avail": "252G",
+        "Filesystem": "tmpfs",
+        "Mount Options": "rw,nosuid,nodev,inode64",
+        "Mounted on": "/dev/shm",
+        "Size": "252G",
+        "Use%": "1%",
+        "Used": "49M"
+      },
+      {
+        "Avail": "5.0M",
+        "Filesystem": "tmpfs",
+        "Mount Options": "rw,nosuid,nodev,noexec,relatime,size=5120k,inode64",
+        "Mounted on": "/run/lock",
+        "Size": "5.0M",
+        "Use%": "0%",
+        "Used": "0"
+      },
+      {
+        "Avail": "112K",
+        "Filesystem": "efivarfs",
+        "Mount Options": "rw,nosuid,nodev,noexec,relatime",
+        "Mounted on": "/sys/firmware/efi/efivars",
+        "Size": "496K",
+        "Use%": "78%",
+        "Used": "380K"
+      },
+      {
+        "Avail": "833M",
+        "Filesystem": "/dev/nvme0n1p1",
+        "Mount Options": "rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro",
+        "Mounted on": "/boot/efi",
+        "Size": "867M",
+        "Use%": "4%",
+        "Used": "34M"
+      },
+      {
+        "Avail": "51G",
+        "Filesystem": "tmpfs",
+        "Mount Options": "rw,nosuid,nodev,relatime,size=52809848k,nr_inodes=13202462,mode=700,uid=1000,gid=1000,inode64",
+        "Mounted on": "/run/user/1000",
+        "Size": "51G",
+        "Use%": "1%",
+        "Used": "2.5M"
+      }
+    ],
+    "GPU": [
+      {
+        "Manufacturer": "ASPEED",
+        "Model": "Unknown",
+        "PCI ID": "1A03:2000"
+      }
+    ],
+    "Host": [
+      {
+        "Name": "qmed",
+        "Time": "Selasa 25 Jun 2024 02:56:45  UTC"
+      }
+    ],
+    "ISA": [
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Advanced Encryption Standard New Instructions (AES-NI)",
+        "Name": "AES"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Advanced Matrix Extensions",
+        "Name": "AMX"
+      },
+      {
+        "CPU Support": "No",
+        "Full Name": "AMX-COMPLEX Instruction",
+        "Name": "AMX-COMPLEX"
+      },
+      {
+        "CPU Support": "No",
+        "Full Name": "AMX-FP16 Instruction",
+        "Name": "AMX-FP16"
+      },
+      {
+        "CPU Support": "No",
+        "Full Name": "AVX-IFMA Instruction",
+        "Name": "AVX-IFMA"
+      },
+      {
+        "CPU Support": "No",
+        "Full Name": "AVX-NE-CONVERT Instruction",
+        "Name": "AVX-NE-CONVERT"
+      },
+      {
+        "CPU Support": "No",
+        "Full Name": "AVX-VNNI-INT8 Instruction",
+        "Name": "AVX-VNNI-INT8"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "AVX-512 Foundation",
+        "Name": "AVX512F"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Vector Neural Network Instructions - BF16",
+        "Name": "AVX512_BF16"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Advanced Vector Extensions 512 - FP16",
+        "Name": "AVX512_FP16"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Vector Neural Network Instructions",
+        "Name": "AVX512_VNNI"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Cache Line Demote",
+        "Name": "CLDEMOTE"
+      },
+      {
+        "CPU Support": "No",
+        "Full Name": "Compare and Add if Condition is Met",
+        "Name": "CMPCCXADD"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Enqueue Command Instruction",
+        "Name": "ENQCMD"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Move Doubleword as Direct Store",
+        "Name": "MOVDIRI"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Move 64 Bytes as Direct Store",
+        "Name": "MOVDIR64B"
+      },
+      {
+        "CPU Support": "No",
+        "Full Name": "PREFETCHIT0/1 Instruction",
+        "Name": "PREFETCHIT0/1"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "SERIALIZE Instruction",
+        "Name": "SERIALIZE"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "SHA1/SHA256 Instruction Extensions",
+        "Name": "SHA_NI"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Transactional Synchronization Extensions",
+        "Name": "TSXLDTRK"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "Vector AES",
+        "Name": "VAES"
+      },
+      {
+        "CPU Support": "Yes",
+        "Full Name": "UMONITOR, UMWAIT, TPAUSE Instructions",
+        "Name": "WAITPKG"
+      }
+    ],
+    "Kernel Log": [
+      {
+        "Entries": "[  +0.000300] audit: type=1107 audit(1719283454.431:7275): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor=\"DENIED\" operation=\"dbus_method_call\"  bus=\"system\" path=\"/org/freedesktop/hostname1\" interface=\"org.freedesktop.DBus.Properties\" member=\"GetAll\" mask=\"send\" name=\":1.37301\" pid=22023 label=\"snap.firefox.firefox\" peer_pid=4123765 peer_label=\"unconfined\""
+      },
+      {
+        "Entries": "exe=\"/usr/bin/dbus-daemon\" sauid=102 hostname=? addr=? terminal=?'"
+      },
+      {
+        "Entries": "[  +0.000247] audit: type=1107 audit(1719283454.431:7276): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor=\"DENIED\" operation=\"dbus_method_call\"  bus=\"system\" path=\"/org/freedesktop/hostname1\" interface=\"org.freedesktop.DBus.Properties\" member=\"GetAll\" mask=\"send\" name=\":1.37301\" pid=22023 label=\"snap.firefox.firefox\" peer_pid=4123765 peer_label=\"unconfined\""
+      },
+      {
+        "Entries": "exe=\"/usr/bin/dbus-daemon\" sauid=102 hostname=? addr=? terminal=?'"
+      },
+      {
+        "Entries": "[  +0.000410] audit: type=1107 audit(1719283454.431:7277): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor=\"DENIED\" operation=\"dbus_method_call\"  bus=\"system\" path=\"/org/freedesktop/hostname1\" interface=\"org.freedesktop.DBus.Properties\" member=\"GetAll\" mask=\"send\" name=\":1.37301\" pid=22023 label=\"snap.firefox.firefox\" peer_pid=4123765 peer_label=\"unconfined\""
+      },
+      {
+        "Entries": "exe=\"/usr/bin/dbus-daemon\" sauid=102 hostname=? addr=? terminal=?'"
+      },
+      {
+        "Entries": "[  +0.000165] audit: type=1107 audit(1719283454.431:7278): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor=\"DENIED\" operation=\"dbus_method_call\"  bus=\"system\" path=\"/org/freedesktop/hostname1\" interface=\"org.freedesktop.DBus.Properties\" member=\"GetAll\" mask=\"send\" name=\":1.37301\" pid=22023 label=\"snap.firefox.firefox\" peer_pid=4123765 peer_label=\"unconfined\""
+      },
+      {
+        "Entries": "exe=\"/usr/bin/dbus-daemon\" sauid=102 hostname=? addr=? terminal=?'"
+      },
+      {
+        "Entries": "[  +0.000355] audit: type=1107 audit(1719283454.431:7279): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor=\"DENIED\" operation=\"dbus_method_call\"  bus=\"system\" path=\"/org/freedesktop/hostname1\" interface=\"org.freedesktop.DBus.Properties\" member=\"GetAll\" mask=\"send\" name=\":1.37301\" pid=22023 label=\"snap.firefox.firefox\" peer_pid=4123765 peer_label=\"unconfined\""
+      },
+      {
+        "Entries": "exe=\"/usr/bin/dbus-daemon\" sauid=102 hostname=? addr=? terminal=?'"
+      },
+      {
+        "Entries": "[  +6.387720] kauditd_printk_skb: 22 callbacks suppressed"
+      },
+      {
+        "Entries": "[  +0.000009] audit: type=1107 audit(1719283460.819:7302): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor=\"DENIED\" operation=\"dbus_signal\"  bus=\"system\" path=\"/org/freedesktop/login1\" interface=\"org.freedesktop.DBus.Properties\" member=\"PropertiesChanged\" name=\":1.16\" mask=\"receive\" pid=22023 label=\"snap.firefox.firefox\" peer_pid=1983 peer_label=\"unconfined\""
+      },
+      {
+        "Entries": "exe=\"/usr/bin/dbus-daemon\" sauid=102 hostname=? addr=? terminal=?'"
+      },
+      {
+        "Entries": "[Jun25 10:48] audit: type=1107 audit(1719283765.180:7303): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor=\"DENIED\" operation=\"dbus_signal\"  bus=\"system\" path=\"/org/freedesktop/login1\" interface=\"org.freedesktop.DBus.Properties\" member=\"PropertiesChanged\" name=\":1.16\" mask=\"receive\" pid=22023 label=\"snap.firefox.firefox\" peer_pid=1983 peer_label=\"unconfined\""
+      },
+      {
+        "Entries": "exe=\"/usr/bin/dbus-daemon\" sauid=102 hostname=? addr=? terminal=?'"
+      },
+      {
+        "Entries": "[Jun25 10:53] audit: type=1400 audit(1719284013.301:7304): apparmor=\"DENIED\" operation=\"open\" class=\"file\" profile=\"snap.firefox.firefox\" name=\"/home/qmed-intel/.wget-hsts\" pid=22023 comm=\"pool-firefox\" requested_mask=\"r\" denied_mask=\"r\" fsuid=1000 ouid=1000"
+      },
+      {
+        "Entries": "[  +0.000508] audit: type=1400 audit(1719284013.305:7305): apparmor=\"DENIED\" operation=\"open\" class=\"file\" profile=\"snap.firefox.firefox\" name=\"/home/qmed-intel/.wget-hsts\" pid=22023 comm=\"pool-firefox\" requested_mask=\"r\" denied_mask=\"r\" fsuid=1000 ouid=1000"
+      },
+      {
+        "Entries": "[  +0.000018] audit: type=1400 audit(1719284013.305:7306): apparmor=\"DENIED\" operation=\"open\" class=\"file\" profile=\"snap.firefox.firefox\" name=\"/home/qmed-intel/.wget-hsts\" pid=22023 comm=\"pool-firefox\" requested_mask=\"r\" denied_mask=\"r\" fsuid=1000 ouid=1000"
+      },
+      {
+        "Entries": "[Jun25 10:56] msr: Write to unrecognized MSR 0xb0 by msrwrite (pid: 4128833)."
+      },
+      {
+        "Entries": "[  +0.000007] msr: See https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/about for details."
+      }
+    ],
+    "Memory": [
+      {
+        "Automatic NUMA Balancing": "Enabled",
+        "Buffers": "1188840 kB",
+        "Cached": "231880448 kB",
+        "HugePages_Total": "0",
+        "Hugepagesize": "2048 kB",
+        "Installed Memory": "512GB (16x32GB DDR5 4800 MT/s [4400 MT/s])",
+        "MemAvailable": "280238164 kB",
+        "MemFree": "41193096 kB",
+        "MemTotal": "528098508 kB",
+        "Populated Memory Channels": "16",
+        "Transparent Huge Pages": "madvise"
+      }
+    ],
+    "NIC": [
+      {
+        "Bus": "0000:16:00.0",
+        "Driver": "bnxt_en",
+        "Driver Version": "6.5.0-28-generic",
+        "Firmware Version": "214.4.91.1/pkg 216.0.333.11",
+        "IRQBalance": "Enabled",
+        "Link": "no",
+        "MAC Address": "14:23:f2:05:5c:ac",
+        "Model": "BCM57416 NetXtreme-E Dual-Media 10G RDMA Ethernet Controller",
+        "NUMA Node": "0",
+        "Name": "ens259f0np0",
+        "Speed": "Unknown!"
+      },
+      {
+        "Bus": "0000:16:00.1",
+        "Driver": "bnxt_en",
+        "Driver Version": "6.5.0-28-generic",
+        "Firmware Version": "214.4.91.1/pkg 216.0.333.11",
+        "IRQBalance": "Enabled",
+        "Link": "yes",
+        "MAC Address": "14:23:f2:05:5c:ad",
+        "Model": "BCM57416 NetXtreme-E Dual-Media 10G RDMA Ethernet Controller",
+        "NUMA Node": "0",
+        "Name": "ens259f1np1",
+        "Speed": "1000Mb/s"
+      },
+      {
+        "Bus": "0000:b8:00.0",
+        "Driver": "bnxt_en",
+        "Driver Version": "6.5.0-28-generic",
+        "Firmware Version": "226.0.145.0/pkg 226.1.107.1",
+        "IRQBalance": "Enabled",
+        "Link": "no",
+        "MAC Address": "5c:6f:69:9d:43:70",
+        "Model": "BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller",
+        "NUMA Node": "1",
+        "Name": "ens802f0np0",
+        "Speed": "Unknown!"
+      },
+      {
+        "Bus": "0000:b8:00.1",
+        "Driver": "bnxt_en",
+        "Driver Version": "6.5.0-28-generic",
+        "Firmware Version": "226.0.145.0/pkg 226.1.107.1",
+        "IRQBalance": "Enabled",
+        "Link": "no",
+        "MAC Address": "5c:6f:69:9d:43:71",
+        "Model": "BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller",
+        "NUMA Node": "1",
+        "Name": "ens802f1np1",
+        "Speed": "Unknown!"
+      }
+    ],
+    "Network IRQ Mapping": [
+      {
+        "CPU:IRQs CPU:IRQs ...": "0:225 2:220 4:230 7:241 9:245 10:227 11:246 12:222 14:233 17:236 20:216 22:229 24:235 27:237 28:238 30:219 66:240 68:244 69:226 71:221 73:231 75:232 76:242 78:247 80:223 81:217 82:228 85:234 86:243 90:224 92:218 94:239",
+        "Interface": "ens259f0np0"
+      },
+      {
+        "CPU:IRQs CPU:IRQs ...": "1:270 3:272 5:277 6:260 8:262 13:255 15:257 16:274 18:279 19:263 21:249 23:256 25:258 26:275 29:264 31:254 64:276 65:259 67:261 70:271 72:273 74:278 77:266 79:268 83:252 84:280 87:267 88:250 89:269 91:251 93:253 95:265",
+        "Interface": "ens259f1np1"
+      },
+      {
+        "CPU:IRQs CPU:IRQs ...": "33:292 35:296 41:287 43:293 45:297 51:289 53:294 55:298 59:303 61:291 62:312 63:295 97:305 98:300 99:309 101:283 103:286 106:281 107:306 108:301 109:310 111:284 113:288 116:282 117:307 118:302 119:311 121:285 123:290 125:304 126:299 127:308",
+        "Interface": "ens802f0np0"
+      },
+      {
+        "CPU:IRQs CPU:IRQs ...": "32:335 34:313 36:316 37:338 38:319 39:341 40:330 42:336 44:314 46:317 47:339 48:321 49:343 50:332 52:337 54:315 56:318 57:340 58:323 60:334 96:325 100:326 102:329 104:320 105:342 110:327 112:331 114:322 115:344 120:328 122:333 124:324",
+        "Interface": "ens802f1np1"
+      }
+    ],
+    "Operating System": [
+      {
+        "Boot Parameters": "BOOT_IMAGE=/boot/vmlinuz-6.5.0-28-generic root=UUID=fa5dfb81-c1fc-4b3c-ad38-5771cd7b47db ro quiet splash vt.handoff=7",
+        "Kernel": "6.5.0-28-generic",
+        "Microcode": "0x2b0004d0",
+        "OS": "Ubuntu 22.04.4 LTS"
+      }
+    ],
+    "PCIe Slots": [
+      {
+        "Bus Address": "0000:16:00.0",
+        "Current Usage": "In Use",
+        "Designation": "OCP_CN1_OCP3 - OCP3.0 CONNECTOR",
+        "Length": "Long",
+        "Type": "x16 PCI Express 5"
+      },
+      {
+        "Bus Address": "0000:38:00.0",
+        "Current Usage": "In Use",
+        "Designation": "J1 - Riser 1, slot 1",
+        "Length": "Long",
+        "Type": "x16 PCI Express 5"
+      },
+      {
+        "Bus Address": "0000:ff:00.0",
+        "Current Usage": "Available",
+        "Designation": "J1 - Riser 1, slot 2",
+        "Length": "Long",
+        "Type": "x16 PCI Express 5"
+      },
+      {
+        "Bus Address": "0000:ff:00.0",
+        "Current Usage": "Available",
+        "Designation": "J2 - Riser 2, slot 1",
+        "Length": "Long",
+        "Type": "x16 PCI Express 5"
+      },
+      {
+        "Bus Address": "0000:b8:00.0",
+        "Current Usage": "In Use",
+        "Designation": "J2 - Riser 2, slot 2",
+        "Length": "Long",
+        "Type": "x16 PCI Express 5"
+      },
+      {
+        "Bus Address": "0000:ff:00.0",
+        "Current Usage": "Available",
+        "Designation": "J32 - Riser 3, slot 1",
+        "Length": "Long",
+        "Type": "x8 PCI Express 5 x16"
+      },
+      {
+        "Bus Address": "0000:ff:00.0",
+        "Current Usage": "Available",
+        "Designation": "J32 - Riser 3, slot 2",
+        "Length": "Long",
+        "Type": "x8 PCI Express 5 x16"
+      }
+    ],
+    "PMU": [
+      {
+        "cpu_cycles": "Active",
+        "gen_programmable_1": "Inactive",
+        "gen_programmable_2": "Inactive",
+        "gen_programmable_3": "Inactive",
+        "gen_programmable_4": "Inactive",
+        "gen_programmable_5": "Inactive",
+        "gen_programmable_6": "Inactive",
+        "gen_programmable_7": "Inactive",
+        "gen_programmable_8": "Inactive",
+        "instructions": "Inactive",
+        "ref_cycles": "Inactive",
+        "topdown_slots": "Inactive"
+      }
+    ],
+    "Power": [
+      {
+        "Frequency Driver": "intel_pstate",
+        "Frequency Governor": "powersave",
+        "Max C-State": "9",
+        "Power \u0026 Perf Policy": "Normal Powersave (7)",
+        "TDP": "270 watts"
+      }
+    ],
+    "Process": [
+      {
+        "%CPU": "34.8",
+        "%MEM": "5.8",
+        "COMMAND": "/home/qmed-intel/env/bin/python3 -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-634f7487-ecf3-4bae-8792-738ec600871b.json",
+        "PID": "2978817",
+        "PPID": "766306",
+        "RSS": "30841400"
+      },
+      {
+        "%CPU": "28.8",
+        "%MEM": "2.1",
+        "COMMAND": "/home/qmed-intel/env/bin/python -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-973d5005-9852-4152-9536-185be79cbaa0.json",
+        "PID": "3145379",
+        "PPID": "766306",
+        "RSS": "11430776"
+      },
+      {
+        "%CPU": "10.2",
+        "%MEM": "3.4",
+        "COMMAND": "/home/qmed-intel/env/bin/python3 -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-fc660e63-212b-43d2-9bc7-e50b5014bc80.json",
+        "PID": "2659677",
+        "PPID": "766306",
+        "RSS": "18296336"
+      },
+      {
+        "%CPU": "2.7",
+        "%MEM": "3.6",
+        "COMMAND": "/home/qmed-intel/env/bin/python3 -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-243aa2a2-8c07-450f-a918-44b00e1d47f6.json",
+        "PID": "828815",
+        "PPID": "2130",
+        "RSS": "19274400"
+      },
+      {
+        "%CPU": "1.7",
+        "%MEM": "0.0",
+        "COMMAND": "/snap/firefox/4209/usr/lib/firefox/firefox -contentproc -childID 34005 -isForBrowser -prefsLen 31819 -prefMapSize 242405 -jsInitLen 234952 -parentBuildID 20240427193319 -greomni /snap/firefox/4209/usr/lib/firefox/omni.ja -appomni /snap/firefox/4209/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/4209/usr/lib/firefox/browser {adcdeed4-ea34-4cb9-a9a9-c636cc153d1c} 22023 true tab",
+        "PID": "4128532",
+        "PPID": "22023",
+        "RSS": "68608"
+      },
+      {
+        "%CPU": "1.7",
+        "%MEM": "0.1",
+        "COMMAND": "/usr/bin/anydesk --backend",
+        "PID": "381172",
+        "PPID": "2067",
+        "RSS": "535700"
+      },
+      {
+        "%CPU": "1.7",
+        "%MEM": "0.2",
+        "COMMAND": "/snap/firefox/4209/usr/lib/firefox/firefox",
+        "PID": "22023",
+        "PPID": "2543",
+        "RSS": "1311104"
+      },
+      {
+        "%CPU": "1.7",
+        "%MEM": "0.1",
+        "COMMAND": "/usr/bin/gnome-shell",
+        "PID": "2543",
+        "PPID": "2130",
+        "RSS": "841424"
+      },
+      {
+        "%CPU": "1.6",
+        "%MEM": "0.0",
+        "COMMAND": "/tmp/.mount_LM_StuTDkgsk/lm-studio",
+        "PID": "2920174",
+        "PPID": "2543",
+        "RSS": "181212"
+      },
+      {
+        "%CPU": "1.3",
+        "%MEM": "0.0",
+        "COMMAND": "/usr/bin/containerd",
+        "PID": "3922719",
+        "PPID": "1",
+        "RSS": "29320"
+      },
+      {
+        "%CPU": "1.3",
+        "%MEM": "0.0",
+        "COMMAND": "/usr/local/bin/ollama serve",
+        "PID": "2780858",
+        "PPID": "1",
+        "RSS": "312320"
+      },
+      {
+        "%CPU": "1.3",
+        "%MEM": "7.4",
+        "COMMAND": "/home/qmed-intel/env/bin/python3 -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-eba53eaa-7085-45c6-91c0-b9aee4996c51.json",
+        "PID": "28694",
+        "PPID": "2130",
+        "RSS": "39374184"
+      },
+      {
+        "%CPU": "1.1",
+        "%MEM": "0.0",
+        "COMMAND": "/usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -nolisten tcp -background none -noreset -keeptty -novtswitch -verbose 3",
+        "PID": "2163",
+        "PPID": "2161",
+        "RSS": "356632"
+      },
+      {
+        "%CPU": "0.7",
+        "%MEM": "0.0",
+        "COMMAND": "/snap/firefox/4209/usr/lib/firefox/firefox -contentproc -childID 29074 -isForBrowser -prefsLen 31819 -prefMapSize 242405 -jsInitLen 234952 -parentBuildID 20240427193319 -greomni /snap/firefox/4209/usr/lib/firefox/omni.ja -appomni /snap/firefox/4209/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/4209/usr/lib/firefox/browser {a826bef0-dbfc-4569-8e1a-17affe97770c} 22023 true tab",
+        "PID": "2890898",
+        "PPID": "22023",
+        "RSS": "298460"
+      },
+      {
+        "%CPU": "0.7",
+        "%MEM": "0.2",
+        "COMMAND": "/snap/firefox/4209/usr/lib/firefox/firefox -contentproc -childID 7840 -isForBrowser -prefsLen 31776 -prefMapSize 242405 -jsInitLen 234952 -parentBuildID 20240427193319 -greomni /snap/firefox/4209/usr/lib/firefox/omni.ja -appomni /snap/firefox/4209/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/4209/usr/lib/firefox/browser {c53a6c6d-e16c-4b3b-bd1d-c3e5dcd46bb8} 22023 true tab",
+        "PID": "766106",
+        "PPID": "22023",
+        "RSS": "1080712"
+      },
+      {
+        "%CPU": "0.6",
+        "%MEM": "0.0",
+        "COMMAND": "/usr/bin/python3 /home/qmed-intel/.local/bin/jupyter-notebook",
+        "PID": "766306",
+        "PPID": "766292",
+        "RSS": "143252"
+      },
+      {
+        "%CPU": "0.6",
+        "%MEM": "0.0",
+        "COMMAND": "/usr/bin/pulseaudio --daemonize=no --log-target=journal",
+        "PID": "2140",
+        "PPID": "2130",
+        "RSS": "22528"
+      },
+      {
+        "%CPU": "0.5",
+        "%MEM": "0.0",
+        "COMMAND": "/snap/firefox/4209/usr/lib/firefox/firefox -contentproc -childID 29064 -isForBrowser -prefsLen 31819 -prefMapSize 242405 -jsInitLen 234952 -parentBuildID 20240427193319 -greomni /snap/firefox/4209/usr/lib/firefox/omni.ja -appomni /snap/firefox/4209/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/4209/usr/lib/firefox/browser {a6da8246-f332-4aa5-b10f-695486e94460} 22023 true tab",
+        "PID": "2780059",
+        "PPID": "22023",
+        "RSS": "230652"
+      },
+      {
+        "%CPU": "0.5",
+        "%MEM": "0.0",
+        "COMMAND": "/usr/lib/libreoffice/program/soffice.bin --calc file:///home/qmed-intel/Desktop/Notebook/ZiYu/test.xlsx",
+        "PID": "2439648",
+        "PPID": "2439632",
+        "RSS": "294120"
+      }
+    ],
+    "Sensor": [
+      {
+        "Reading": "68.20 CFM",
+        "Sensor": "System Airflow",
+        "Status": "ok"
+      },
+      {
+        "Reading": "18 Amps",
+        "Sensor": "PSU1 Out Current",
+        "Status": "ok"
+      },
+      {
+        "Reading": "18 Amps",
+        "Sensor": "PSU2 Out Current",
+        "Status": "ok"
+      },
+      {
+        "Reading": "29.79 percent",
+        "Sensor": "Pwm 1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "29.79 percent",
+        "Sensor": "Pwm 2",
+        "Status": "ok"
+      },
+      {
+        "Reading": "29.79 percent",
+        "Sensor": "Pwm 3",
+        "Status": "ok"
+      },
+      {
+        "Reading": "29.79 percent",
+        "Sensor": "Pwm 4",
+        "Status": "ok"
+      },
+      {
+        "Reading": "29.79 percent",
+        "Sensor": "Pwm 5",
+        "Status": "ok"
+      },
+      {
+        "Reading": "29.79 percent",
+        "Sensor": "Pwm 6",
+        "Status": "ok"
+      },
+      {
+        "Reading": "6750 RPM",
+        "Sensor": "Fan 1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "6750 RPM",
+        "Sensor": "Fan 2",
+        "Status": "ok"
+      },
+      {
+        "Reading": "6750 RPM",
+        "Sensor": "Fan 3",
+        "Status": "ok"
+      },
+      {
+        "Reading": "6750 RPM",
+        "Sensor": "Fan 4",
+        "Status": "ok"
+      },
+      {
+        "Reading": "6750 RPM",
+        "Sensor": "Fan 5",
+        "Status": "ok"
+      },
+      {
+        "Reading": "6750 RPM",
+        "Sensor": "Fan 6",
+        "Status": "ok"
+      },
+      {
+        "Reading": "8968 RPM",
+        "Sensor": "PSU1 Fan Speed 1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "8968 RPM",
+        "Sensor": "PSU2 Fan Speed 1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "305.80 Watts",
+        "Sensor": "CPU Power",
+        "Status": "ok"
+      },
+      {
+        "Reading": "23 Watts",
+        "Sensor": "Memory Power",
+        "Status": "ok"
+      },
+      {
+        "Reading": "224.20 Watts",
+        "Sensor": "PSU1 Input Power",
+        "Status": "ok"
+      },
+      {
+        "Reading": "212.40 Watts",
+        "Sensor": "PSU1 Out Power",
+        "Status": "ok"
+      },
+      {
+        "Reading": "224.20 Watts",
+        "Sensor": "PSU2 Input Power",
+        "Status": "ok"
+      },
+      {
+        "Reading": "212.40 Watts",
+        "Sensor": "PSU2 Out Power",
+        "Status": "ok"
+      },
+      {
+        "Reading": "464 Watts",
+        "Sensor": "Total Power",
+        "Status": "ok"
+      },
+      {
+        "Reading": "29 degrees C",
+        "Sensor": "Aggr1 Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-42 degrees C",
+        "Sensor": "Aggr2 Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "36 degrees C",
+        "Sensor": "BB BMC Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "38 degrees C",
+        "Sensor": "BB M2 Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "35 degrees C",
+        "Sensor": "BB OCP Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "28 degrees C",
+        "Sensor": "BB P0 VR Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "30 degrees C",
+        "Sensor": "BB P1 VR Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "33 degrees C",
+        "Sensor": "BB Riser 2 Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "35 degrees C",
+        "Sensor": "CPU0 VR Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "37 degrees C",
+        "Sensor": "CPU1 VR Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-52 degrees C",
+        "Sensor": "DTS CPU0",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-49 degrees C",
+        "Sensor": "DTS CPU1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "38 degrees C",
+        "Sensor": "Die CPU0",
+        "Status": "ok"
+      },
+      {
+        "Reading": "41 degrees C",
+        "Sensor": "Die CPU1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "36 degrees C",
+        "Sensor": "Exit Air Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "25 degrees C",
+        "Sensor": "Front Panel Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "25 degrees C",
+        "Sensor": "HSBP 1 Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-44 degrees C",
+        "Sensor": "Margin CPU0",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-42 degrees C",
+        "Sensor": "Margin CPU1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "30 degrees C",
+        "Sensor": "NVMe Aggr 1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-67 degrees C",
+        "Sensor": "P0 DIMM ABCD Mgn",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-66 degrees C",
+        "Sensor": "P0 DIMM EFGH Mgn",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-66 degrees C",
+        "Sensor": "P1 DIMM ABCD Mgn",
+        "Status": "ok"
+      },
+      {
+        "Reading": "-65 degrees C",
+        "Sensor": "P1 DIMM EFGH Mgn",
+        "Status": "ok"
+      },
+      {
+        "Reading": "38 degrees C",
+        "Sensor": "PCH Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "27 degrees C",
+        "Sensor": "PSU1 Temperature",
+        "Status": "ok"
+      },
+      {
+        "Reading": "29 degrees C",
+        "Sensor": "PSU2 Temperature",
+        "Status": "ok"
+      },
+      {
+        "Reading": "34 degrees C",
+        "Sensor": "Riser 1 Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "35 degrees C",
+        "Sensor": "Riser 2 Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "32 degrees C",
+        "Sensor": "Riser 3 Temp",
+        "Status": "ok"
+      },
+      {
+        "Reading": "0 percent",
+        "Sensor": "TCC CPU0",
+        "Status": "ok"
+      },
+      {
+        "Reading": "0 percent",
+        "Sensor": "TCC CPU1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.80 Volts",
+        "Sensor": "P1V8 PCH",
+        "Status": "ok"
+      },
+      {
+        "Reading": "3.32 Volts",
+        "Sensor": "P3V3",
+        "Status": "ok"
+      },
+      {
+        "Reading": "3.08 Volts",
+        "Sensor": "P3VBAT",
+        "Status": "ok"
+      },
+      {
+        "Reading": "4.99 Volts",
+        "Sensor": "P5V",
+        "Status": "ok"
+      },
+      {
+        "Reading": "12.15 Volts",
+        "Sensor": "P12V AUX",
+        "Status": "ok"
+      },
+      {
+        "Reading": "12.15 Volts",
+        "Sensor": "P12V PSU",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.05 Volts",
+        "Sensor": "P105 PCH AUX",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.15 Volts",
+        "Sensor": "PVCCD HV CPU0",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.16 Volts",
+        "Sensor": "PVCCD HV CPU1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.80 Volts",
+        "Sensor": "PVCCFA EHV CPU0",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.81 Volts",
+        "Sensor": "PVCCFA EHV CPU1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.09 Volts",
+        "Sensor": "PVCCINFAON CPU0",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.09 Volts",
+        "Sensor": "PVCCINFAON CPU1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.82 Volts",
+        "Sensor": "PVCCIN CPU0",
+        "Status": "ok"
+      },
+      {
+        "Reading": "1.82 Volts",
+        "Sensor": "PVCCIN CPU1",
+        "Status": "ok"
+      },
+      {
+        "Reading": "0.90 Volts",
+        "Sensor": "PVNN PCH AUX",
+        "Status": "ok"
+      }
+    ],
+    "Software Version": [
+      {
+        "Binutils": "GNU ld (GNU Binutils for Ubuntu) 2.38",
+        "GCC": "gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+        "GLIBC": "ldd (Ubuntu GLIBC 2.35-0ubuntu3.8) 2.35",
+        "Java": "",
+        "OpenSSL": "OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)",
+        "Python": "",
+        "Python3": "Python 3.10.12"
+      }
+    ],
+    "System": [
+      {
+        "Manufacturer": "Intel Corporation",
+        "Product Name": "M50FCP2SBSTD",
+        "Serial #": "WO202498L01S001",
+        "UUID": "0016dd22-4e93-ed11-906e-a4bf01946fee",
+        "Version": "M50FCP2UR208"
+      }
+    ],
+    "System Event Log": [
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Fan #0x10",
+        "Status": "Lower Non-critical going high",
+        "Time": "02:41:26 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Lower Non-critical going low ",
+        "Time": "02:42:05 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Lower Non-critical going high",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Lower Critical going low ",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Lower Critical going high",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Lower Non-recoverable going low ",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Lower Non-recoverable going high",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Upper Non-critical going low ",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Upper Non-critical going high",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Upper Critical going low ",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Upper Critical going high",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Upper Non-recoverable going low ",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "Upper Non-recoverable going high",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Temperature #0x30",
+        "Status": "",
+        "Time": "02:42:06 +08"
+      },
+      {
+        "Date": "04/16/24",
+        "Event": "Asserted",
+        "Sensor": "Fan #0x06",
+        "Status": "Lower Critical going low ",
+        "Time": "02:43:40 +08"
+      },
+      {
+        "Date": "04/17/24",
+        "Event": "Asserted",
+        "Sensor": "Fan #0x06",
+        "Status": "Lower Critical going low ",
+        "Time": "11:23:52 +08"
+      },
+      {
+        "Date": "05/06/24",
+        "Event": "Asserted",
+        "Sensor": "Fan #0x06",
+        "Status": "Lower Critical going low ",
+        "Time": "21:26:15 +08"
+      }
+    ],
+    "Uncore": [
+      {
+        "CHA Count": "32",
+        "Maximum Frequency": "2.4GHz",
+        "Minimum Frequency": "0.8GHz"
+      }
+    ],
+    "Vulnerability": [
+      {
+        "CVE-2017-5715": "OK (IBRS + IBPB are mitigating the vulnerability)",
+        "CVE-2017-5753": "OK (Mitigation: usercopy/swapgs barriers and __user pointer sanitization)",
+        "CVE-2017-5754": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2018-12126": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2018-12127": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2018-12130": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2018-12207": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2018-3615": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2018-3620": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2018-3639": "OK (Mitigation: Speculative Store Bypass disabled via prctl)",
+        "CVE-2018-3640": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2018-3646": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2019-11091": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2019-11135": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2020-0543": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2022-40982": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2023-20569": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2023-20593": "OK (your CPU vendor reported your CPU model as not affected)",
+        "CVE-2023-23583": "OK (Your microcode mitigates the vulnerability)"
+      }
+    ],
+    "svr-info": [
+      {
+        "version": "2.10.0_2024-05-03_6e725730"
+      }
+    ]
+  },
+  "Performance": {
+    "Core Frequency": [
+      {
+        "Core Count": "1",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "2",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "3",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "4",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "5",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "6",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "7",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "8",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "9",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "10",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "11",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "12",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "13",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "14",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "15",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "16",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.4"
+      },
+      {
+        "Core Count": "17",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.1"
+      },
+      {
+        "Core Count": "18",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.1"
+      },
+      {
+        "Core Count": "19",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.1"
+      },
+      {
+        "Core Count": "20",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.1"
+      },
+      {
+        "Core Count": "21",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.0"
+      },
+      {
+        "Core Count": "22",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "3.0"
+      },
+      {
+        "Core Count": "23",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.8"
+      },
+      {
+        "Core Count": "24",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.8"
+      },
+      {
+        "Core Count": "25",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.8"
+      },
+      {
+        "Core Count": "26",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.8"
+      },
+      {
+        "Core Count": "27",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.7"
+      },
+      {
+        "Core Count": "28",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.7"
+      },
+      {
+        "Core Count": "29",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.6"
+      },
+      {
+        "Core Count": "30",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.6"
+      },
+      {
+        "Core Count": "31",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.6"
+      },
+      {
+        "Core Count": "32",
+        "Measured avx128 Frequency (GHz)": "",
+        "Measured avx256 Frequency (GHz)": "",
+        "Measured avx512 Frequency (GHz)": "",
+        "Measured non-AVX Frequency (GHz)": "",
+        "Spec non-AVX Frequency (GHz)": "2.6"
+      }
+    ],
+    "Summary": [
+      {
+        "All-core Turbo Frequency": "",
+        "All-core Turbo Power": "",
+        "All-core Turbo Temperature": "",
+        "CPU Speed": "",
+        "Disk Speed": "",
+        "Idle Power": "",
+        "Memory Minimum Latency": "",
+        "Memory Peak Bandwidth": "",
+        "Single-core Turbo Frequency": ""
+      }
+    ]
+  },
+  "Profile": {
+    "Summary": [
+      {
+        "CPI": "",
+        "CPU Frequency (GHz)": "",
+        "CPU Utilization (%)": "",
+        "Drive Reads (kB/s)": "",
+        "Drive Writes (kB/s)": "",
+        "Memory Available (kB)": "",
+        "Network RX (kB/s)": "",
+        "Network TX (kB/s)": "",
+        "Package Power (Watts)": ""
+      }
+    ]
+  },
+  "Recommendations": {
+    "Insight": [
+      {
+        "Justification": "Detected '16' temperature-related service action(s) in the System Event Log.",
+        "Recommendation": "Consider reviewing the System Event Log table located on the Configuration page."
+      },
+      {
+        "Justification": "CPU frequency governors are set to 'powersave'.",
+        "Recommendation": "Consider setting the CPU frequency governors to 'performance'."
+      },
+      {
+        "Justification": "No work queues are configured for DSA accelerator(s).",
+        "Recommendation": "Consider configuring DSA to allow accelerated data copy and transformation in DSA-enabled software."
+      },
+      {
+        "Justification": "Power and Performance policy is set to 'Normal Powersave (7)'.",
+        "Recommendation": "Consider setting the Power and Performance policy to 'Performance'."
+      },
+      {
+        "Justification": "DRAM DIMMs are configured at less than their maximum supported speed.",
+        "Recommendation": "Consider configuring DIMMs for their maximum supported speed."
+      }
+    ]
+  }
+}

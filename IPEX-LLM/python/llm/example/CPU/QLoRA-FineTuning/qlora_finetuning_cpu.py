@@ -25,6 +25,9 @@ from transformers import BitsAndBytesConfig
 from ipex_llm.transformers.qlora import get_peft_model, prepare_model_for_kbit_training, LoraConfig
 from ipex_llm.transformers import AutoModelForCausalLM
 
+##For raw HF runs
+# from peft import get_peft_model, prepare_model_for_kbit_training, LoraConfig
+# from transformers import AutoModelForCausalLM
 
 from datasets import load_dataset
 import argparse

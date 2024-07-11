@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>System Health Inspector</title>
+    <link rel="icon" type="image/x-icon" href="https://www.intel.com/favicon.ico">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css"
+        integrity="sha384-M86HUGbBFILBBZ9ykMAbT3nVb0+2C7yZlF8X2CiKNpDOQjKroMJqIeGZ/Le8N2Qp" crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+        integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/d3-flame-graph@4.1.3/dist/d3-flamegraph.css">
+    <script type="text/javascript" src="https://d3js.org/d3.v7.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/d3-flame-graph@4.1.3/dist/d3-flamegraph.min.js"></script>
+    <script src="https://unpkg.com/chart.js@3.7.1/dist/chart.min.js"
+        integrity="sha384-7NrRHqlWUj2hJl3a/dZj/a1GxuQc56mJ3aYsEnydBYrY1jR+RSt6SBvK3sHfj+mJ" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+    <style>
+        .content {
+            padding: 0 2em;
+            line-height: 1.6em;
+        }
+
+        .content h2 {
+            font-weight: 300;
+            color: #888;
+        }
+
+        .content h2:before {
+            content: '';
+            display: block;
+            position: relative;
+            width: 0;
+            height: 5em;
+            margin-top: -5em
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            background-color: whitesmoke;
+            z-index: 99;
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            color: #07578c;
+            border-bottom: 1px solid #eee;
+        }
+
+        header h1 {
+            margin: 0.2em 0;
+            font-size: 3em;
+            font-weight: 300;
+        }
+
+         
+        .tab {
+            position: fixed;
+            top: 67px;
+            z-index: 99;
+            height: 46px;
+            width: 100%;
+            background-color: #f5f5f5;
+        }
+
+         
+        .tab button {
+            background-color: inherit;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            background-color: #ccc;
+            width: 175px;
+        }
+
+         
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+         
+        .tab button.active {
+            background-color: #fff;
+        }
+
+         
+        .tabcontent {
+            position: relative;
+            top: 115px;
+            display: none;
+            padding: 0px 0px;
+        }
+
+        .tabdefault {
+            display: block;
+        }
+
+        .tabnotdefault {
+        }
+
+        .master {
+            overflow: hidden;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 113px;   
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            padding-left: 0px;
+        }
+
+        .sidebar h1 {
+            position: absolute;
+            top: 0;
+            padding: 0px 8px 8px 35px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #1f8dd6;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 35px;
+            text-decoration: none;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .togglebtn {
+            position: absolute;
+            top: 0;
+            right: 0px;
+            font-size: 25px;
+            padding-left: 5px;
+            color: #ccc;
+            background-color: #1f8dd6;
+        }
+
+        .sidebar .togglebtn:hover {
+            color: #666;
+        }
+
+        #myConfigurationContent {
+            transition: margin-left .5s;
+        }
+    </style>
+    <noscript>
+        <style type="text/css">
+            .tabcontent {display:block;}
+            .tabnotdefault {left: 140px;}
+        </style>
+    </noscript>
+</head>
+
+<body>
+    <header>
+        <h1>Intel&reg; System Health Inspector</h1>
+    </header>
+    <nav class="tab">
+        
+        
+        <button class="tablinks" onclick='openTab(event, &#34;ConfigurationContent&#34;)'  id="defaultOpen" >Configuration</button>
+        
+        <button class="tablinks" onclick='openTab(event, &#34;BenchmarkContent&#34;)' >Benchmark</button>
+        
+        <button class="tablinks" onclick='openTab(event, &#34;ProfileContent&#34;)' >Profile</button>
+        
+        <button class="tablinks" onclick='openTab(event, &#34;AnalyzeContent&#34;)' >Analyze</button>
+        
+        <button class="tablinks" onclick='openTab(event, &#34;InsightsContent&#34;)' >Insights</button>
+        
+    </nav>
+    
+    
+        
+        <div id="ConfigurationContent" class="tabcontent tabdefault">
+            <main class="content">
+                <div id="mySidebar" class="sidebar">
+                    <a href="#" style="position: absolute;top: 0; padding-left: 7px; padding-right: 27px; color: #fff; background-color: #1f8dd6">CONTENTS</a>
+                    <a href="javascript:void(0)" class="togglebtn" onclick="toggleNav()">&lt;</a>
+                    <a href="#Host">System</a><a href="#BIOS">Software</a><a href="#CPU">CPU</a><a href="#Power">Power</a><a href="#Memory">Memory</a><a href="#NIC">Network</a><a href="#Disk">Storage</a><a href="#GPU">GPU</a><a href="#CXL Device">CXL</a><a href="#Vulnerability">Security</a><a href="#Process">Status</a>
+                </div>
+                <div id="myConfigurationContent">
+                    <noscript>
+                        <h3>JavaScript is disabled. Functionality is limited.</h3>
+                    </noscript>
+                    
+                    <h3></h3>
+                    
+                    
+                    <section>
+                        <h2 id="Host">Host</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">Name</td><td>qmed</td></tr><tr><td style="font-weight:bold">Time</td><td>Selasa 25 Jun 2024 02:56:45  UTC</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="System">System</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">Manufacturer</td><td>Intel Corporation</td></tr><tr><td style="font-weight:bold">Product Name</td><td>M50FCP2SBSTD</td></tr><tr><td style="font-weight:bold">Version</td><td>M50FCP2UR208</td></tr><tr><td style="font-weight:bold">Serial #</td><td>WO202498L01S001</td></tr><tr><td style="font-weight:bold">UUID</td><td>0016dd22-4e93-ed11-906e-a4bf01946fee</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Baseboard">Baseboard</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">Manufacturer</td><td>Intel Corporation</td></tr><tr><td style="font-weight:bold">Product Name</td><td>M50FCP2SBSTD</td></tr><tr><td style="font-weight:bold">Version</td><td>M36359-350</td></tr><tr><td style="font-weight:bold">Serial #</td><td>BQFX30200034</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Chassis">Chassis</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">Manufacturer</td><td>...............................</td></tr><tr><td style="font-weight:bold">Type</td><td>Rack Mount Chassis</td></tr><tr><td style="font-weight:bold">Version</td><td>..................</td></tr><tr><td style="font-weight:bold">Serial #</td><td>..................</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="PCIe Slots">PCIe Slots</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Designation</th><th>Type</th><th>Length</th><th>Bus Address</th><th>Current Usage</th></tr></thead><tbody><tr><td>OCP_CN1_OCP3 - OCP3.0 CONNECTOR</td><td>x16 PCI Express 5</td><td>Long</td><td>0000:16:00.0</td><td>In Use</td></tr><tr><td>J1 - Riser 1, slot 1</td><td>x16 PCI Express 5</td><td>Long</td><td>0000:38:00.0</td><td>In Use</td></tr><tr><td>J1 - Riser 1, slot 2</td><td>x16 PCI Express 5</td><td>Long</td><td>0000:ff:00.0</td><td>Available</td></tr><tr><td>J2 - Riser 2, slot 1</td><td>x16 PCI Express 5</td><td>Long</td><td>0000:ff:00.0</td><td>Available</td></tr><tr><td>J2 - Riser 2, slot 2</td><td>x16 PCI Express 5</td><td>Long</td><td>0000:b8:00.0</td><td>In Use</td></tr><tr><td>J32 - Riser 3, slot 1</td><td>x8 PCI Express 5 x16</td><td>Long</td><td>0000:ff:00.0</td><td>Available</td></tr><tr><td>J32 - Riser 3, slot 2</td><td>x8 PCI Express 5 x16</td><td>Long</td><td>0000:ff:00.0</td><td>Available</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="BIOS">BIOS</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">Vendor</td><td>Intel Corporation</td></tr><tr><td style="font-weight:bold">Version</td><td>SE5C741.86B.01.01.0004.2303280404</td></tr><tr><td style="font-weight:bold">Release Date</td><td>03/28/2023</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Operating System">Operating System</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">OS</td><td>Ubuntu 22.04.4 LTS</td></tr><tr><td style="font-weight:bold">Kernel</td><td>6.5.0-28-generic</td></tr><tr><td style="font-weight:bold">Boot Parameters</td><td>BOOT_IMAGE=/boot/vmlinuz-6.5.0-28-generic root=UUID=fa5dfb81-c1fc-4b3c-ad38-5771cd7b47db ro quiet splash vt.handoff=7</td></tr><tr><td style="font-weight:bold">Microcode</td><td>0x2b0004d0</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Software Version">Software Version</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">GCC</td><td>gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0</td></tr><tr><td style="font-weight:bold">GLIBC</td><td>ldd (Ubuntu GLIBC 2.35-0ubuntu3.8) 2.35</td></tr><tr><td style="font-weight:bold">Binutils</td><td>GNU ld (GNU Binutils for Ubuntu) 2.38</td></tr><tr><td style="font-weight:bold">Python</td><td></td></tr><tr><td style="font-weight:bold">Python3</td><td>Python 3.10.12</td></tr><tr><td style="font-weight:bold">Java</td><td></td></tr><tr><td style="font-weight:bold">OpenSSL</td><td>OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="CPU">CPU</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">CPU Model</td><td>Intel(R) Xeon(R) Gold 6430L</td></tr><tr><td style="font-weight:bold">Architecture</td><td>x86_64</td></tr><tr><td style="font-weight:bold">Microarchitecture</td><td>SPR_XCC</td></tr><tr><td style="font-weight:bold">Family</td><td>6</td></tr><tr><td style="font-weight:bold">Model</td><td>143</td></tr><tr><td style="font-weight:bold">Stepping</td><td>7</td></tr><tr><td style="font-weight:bold">Base Frequency</td><td>1.9GHz</td></tr><tr><td style="font-weight:bold">Maximum Frequency</td><td>3.4GHz</td></tr><tr><td style="font-weight:bold">All-core Maximum Frequency</td><td>2.6GHz</td></tr><tr><td style="font-weight:bold">CPUs</td><td>128</td></tr><tr><td style="font-weight:bold">On-line CPU List</td><td>0-127</td></tr><tr><td style="font-weight:bold">Hyperthreading</td><td>Enabled</td></tr><tr><td style="font-weight:bold">Cores per Socket</td><td>32</td></tr><tr><td style="font-weight:bold">Sockets</td><td>2</td></tr><tr><td style="font-weight:bold">NUMA Nodes</td><td>2</td></tr><tr><td style="font-weight:bold">NUMA CPU List</td><td>0-31,64-95 :: 32-63,96-127</td></tr><tr><td style="font-weight:bold">L1d Cache</td><td>3 MiB (64 instances)</td></tr><tr><td style="font-weight:bold">L1i Cache</td><td>2 MiB (64 instances)</td></tr><tr><td style="font-weight:bold">L2 Cache</td><td>128 MiB (64 instances)</td></tr><tr><td style="font-weight:bold">L3 Cache</td><td>120 MiB</td></tr><tr><td style="font-weight:bold">L3 per Core</td><td>1.875 MiB</td></tr><tr><td style="font-weight:bold">Memory Channels</td><td>8</td></tr><tr><td style="font-weight:bold">Prefetchers</td><td>L2 HW: Enabled, L2 Adj.: Enabled, DCU HW: Enabled, DCU IP: Enabled, AMP: Disabled, Homeless: Disabled, LLC: Disabled</td></tr><tr><td style="font-weight:bold">Intel Turbo Boost</td><td>Enabled</td></tr><tr><td style="font-weight:bold">Virtualization</td><td></td></tr><tr><td style="font-weight:bold">PPINs</td><td></td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="ISA">ISA</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Name</th><th>Full Name</th><th>CPU Support</th></tr></thead><tbody><tr><td>AES</td><td>Advanced Encryption Standard New Instructions (AES-NI)</td><td>Yes</td></tr><tr><td>AMX</td><td>Advanced Matrix Extensions</td><td>Yes</td></tr><tr><td>AMX-COMPLEX</td><td>AMX-COMPLEX Instruction</td><td>No</td></tr><tr><td>AMX-FP16</td><td>AMX-FP16 Instruction</td><td>No</td></tr><tr><td>AVX-IFMA</td><td>AVX-IFMA Instruction</td><td>No</td></tr><tr><td>AVX-NE-CONVERT</td><td>AVX-NE-CONVERT Instruction</td><td>No</td></tr><tr><td>AVX-VNNI-INT8</td><td>AVX-VNNI-INT8 Instruction</td><td>No</td></tr><tr><td>AVX512F</td><td>AVX-512 Foundation</td><td>Yes</td></tr><tr><td>AVX512_BF16</td><td>Vector Neural Network Instructions - BF16</td><td>Yes</td></tr><tr><td>AVX512_FP16</td><td>Advanced Vector Extensions 512 - FP16</td><td>Yes</td></tr><tr><td>AVX512_VNNI</td><td>Vector Neural Network Instructions</td><td>Yes</td></tr><tr><td>CLDEMOTE</td><td>Cache Line Demote</td><td>Yes</td></tr><tr><td>CMPCCXADD</td><td>Compare and Add if Condition is Met</td><td>No</td></tr><tr><td>ENQCMD</td><td>Enqueue Command Instruction</td><td>Yes</td></tr><tr><td>MOVDIRI</td><td>Move Doubleword as Direct Store</td><td>Yes</td></tr><tr><td>MOVDIR64B</td><td>Move 64 Bytes as Direct Store</td><td>Yes</td></tr><tr><td>PREFETCHIT0/1</td><td>PREFETCHIT0/1 Instruction</td><td>No</td></tr><tr><td>SERIALIZE</td><td>SERIALIZE Instruction</td><td>Yes</td></tr><tr><td>SHA_NI</td><td>SHA1/SHA256 Instruction Extensions</td><td>Yes</td></tr><tr><td>TSXLDTRK</td><td>Transactional Synchronization Extensions</td><td>Yes</td></tr><tr><td>VAES</td><td>Vector AES</td><td>Yes</td></tr><tr><td>WAITPKG</td><td>UMONITOR, UMWAIT, TPAUSE Instructions</td><td>Yes</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Accelerator">Accelerator</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Name</th><th>Count</th><th>Work Queues</th><th>Full Name</th><th>Description</th></tr></thead><tbody><tr><td>DLB</td><td>0</td><td>N/A</td><td>Intel Dynamic Load Balancer</td><td>hardware managed system of queues and arbiters connecting producers and consumers</td></tr><tr><td>DSA</td><td>2</td><td>None</td><td>Intel Data Streaming Accelerator</td><td>a high-performance data copy and transformation accelerator</td></tr><tr><td>IAA</td><td>0</td><td>None</td><td>Intel Analytics Accelerator</td><td>accelerates compression and decompression for big data applications and in-memory analytic databases</td></tr><tr><td>QAT (on CPU)</td><td>0</td><td>N/A</td><td>Intel Quick Assist Technology</td><td>accelerates data encryption and compression for applications from networking to enterprise, cloud to storage, and content delivery to database</td></tr><tr><td>QAT (on chipset)</td><td>0</td><td>N/A</td><td>Intel Quick Assist Technology</td><td>accelerates data encryption and compression for applications from networking to enterprise, cloud to storage, and content delivery to database</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Power">Power</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">TDP</td><td>270 watts</td></tr><tr><td style="font-weight:bold">Power &amp; Perf Policy</td><td>Normal Powersave (7)</td></tr><tr><td style="font-weight:bold">Frequency Governor</td><td>powersave</td></tr><tr><td style="font-weight:bold">Frequency Driver</td><td>intel_pstate</td></tr><tr><td style="font-weight:bold">Max C-State</td><td>9</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Uncore">Uncore</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">CHA Count</td><td>32</td></tr><tr><td style="font-weight:bold">Minimum Frequency</td><td>0.8GHz</td></tr><tr><td style="font-weight:bold">Maximum Frequency</td><td>2.4GHz</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Memory">Memory</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">Installed Memory</td><td>512GB (16x32GB DDR5 4800 MT/s [4400 MT/s])</td></tr><tr><td style="font-weight:bold">MemTotal</td><td>528098508 kB</td></tr><tr><td style="font-weight:bold">MemFree</td><td>41193096 kB</td></tr><tr><td style="font-weight:bold">MemAvailable</td><td>280238164 kB</td></tr><tr><td style="font-weight:bold">Buffers</td><td>1188840 kB</td></tr><tr><td style="font-weight:bold">Cached</td><td>231880448 kB</td></tr><tr><td style="font-weight:bold">HugePages_Total</td><td>0</td></tr><tr><td style="font-weight:bold">Hugepagesize</td><td>2048 kB</td></tr><tr><td style="font-weight:bold">Transparent Huge Pages</td><td>madvise</td></tr><tr><td style="font-weight:bold">Automatic NUMA Balancing</td><td>Enabled</td></tr><tr><td style="font-weight:bold">Populated Memory Channels</td><td>16</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="DIMM Population">DIMM Population</h2>
+<table class="pure-table pure-table-bordered"><thead><tr><th>Socket</th><th></th></tr></thead><tbody><tr><td>0</td><td><table class="pure-table pure-table-bordered"><thead><tr><th>Channel</th><th>Slots</th></tr></thead><tbody><tr><td>0</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>1</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>2</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>3</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>4</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>5</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>6</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>7</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td>1</td><td><table class="pure-table pure-table-bordered"><thead><tr><th>Channel</th><th>Slots</th></tr></thead><tbody><tr><td>0</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>1</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>2</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>3</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>4</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>5</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>6</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr><tr><td>7</td><td><table class="pure-table pure-table-bordered"><tbody><tr><td style="background-color:lightgreen">32 GB @4400 MT/s DDR5 Synchronous Registered (Buffered) Micron MTC20F2085S1RC48BA1</td><td style="background-color:silver">No Module Installed</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="DIMM">DIMM</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Bank Locator</th><th>Locator</th><th>Manufacturer</th><th>Part</th><th>Serial</th><th>Size</th><th>Type</th><th>Detail</th><th>Speed</th><th>Rank</th><th>Configured Speed</th></tr></thead><tbody><tr><td>NODE 0</td><td>CPU0_DIMM_A1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E5FC5</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 0</td><td>CPU0_DIMM_A2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 0</td><td>CPU0_DIMM_B1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E394F</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 0</td><td>CPU0_DIMM_B2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 1</td><td>CPU0_DIMM_C1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E61A3</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 1</td><td>CPU0_DIMM_C2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 1</td><td>CPU0_DIMM_D1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E4802</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 1</td><td>CPU0_DIMM_D2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 2</td><td>CPU0_DIMM_E1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E3F47</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 2</td><td>CPU0_DIMM_E2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 2</td><td>CPU0_DIMM_F1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E3FFD</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 2</td><td>CPU0_DIMM_F2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 3</td><td>CPU0_DIMM_G1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E3E10</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 3</td><td>CPU0_DIMM_G2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 3</td><td>CPU0_DIMM_H1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E6235</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 3</td><td>CPU0_DIMM_H2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 4</td><td>CPU1_DIMM_A1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E64BD</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 4</td><td>CPU1_DIMM_A2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 4</td><td>CPU1_DIMM_B1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E3822</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 4</td><td>CPU1_DIMM_B2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 5</td><td>CPU1_DIMM_C1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E6231</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 5</td><td>CPU1_DIMM_C2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 5</td><td>CPU1_DIMM_D1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E3FFB</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 5</td><td>CPU1_DIMM_D2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 6</td><td>CPU1_DIMM_E1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E377D</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 6</td><td>CPU1_DIMM_E2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 6</td><td>CPU1_DIMM_F1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E61FD</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 6</td><td>CPU1_DIMM_F2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 7</td><td>CPU1_DIMM_G1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E3CFB</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 7</td><td>CPU1_DIMM_G2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr><tr><td>NODE 7</td><td>CPU1_DIMM_H1</td><td>Micron</td><td>MTC20F2085S1RC48BA1</td><td>364E3A52</td><td>32 GB</td><td>DDR5</td><td>Synchronous Registered (Buffered)</td><td>4800 MT/s</td><td>2</td><td>4400 MT/s</td></tr><tr><td>NODE 7</td><td>CPU1_DIMM_H2</td><td></td><td></td><td></td><td>No Module Installed</td><td>Unknown</td><td>Unknown Synchronous</td><td></td><td></td><td></td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="NIC">NIC</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Name</th><th>Model</th><th>Speed</th><th>Link</th><th>Bus</th><th>Driver</th><th>Driver Version</th><th>Firmware Version</th><th>MAC Address</th><th>NUMA Node</th><th>IRQBalance</th></tr></thead><tbody><tr><td>ens259f0np0</td><td>BCM57416 NetXtreme-E Dual-Media 10G RDMA Ethernet Controller</td><td>Unknown!</td><td>no</td><td>0000:16:00.0</td><td>bnxt_en</td><td>6.5.0-28-generic</td><td>214.4.91.1/pkg 216.0.333.11</td><td>14:23:f2:05:5c:ac</td><td>0</td><td>Enabled</td></tr><tr><td>ens259f1np1</td><td>BCM57416 NetXtreme-E Dual-Media 10G RDMA Ethernet Controller</td><td>1000Mb/s</td><td>yes</td><td>0000:16:00.1</td><td>bnxt_en</td><td>6.5.0-28-generic</td><td>214.4.91.1/pkg 216.0.333.11</td><td>14:23:f2:05:5c:ad</td><td>0</td><td>Enabled</td></tr><tr><td>ens802f0np0</td><td>BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller</td><td>Unknown!</td><td>no</td><td>0000:b8:00.0</td><td>bnxt_en</td><td>6.5.0-28-generic</td><td>226.0.145.0/pkg 226.1.107.1</td><td>5c:6f:69:9d:43:70</td><td>1</td><td>Enabled</td></tr><tr><td>ens802f1np1</td><td>BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller</td><td>Unknown!</td><td>no</td><td>0000:b8:00.1</td><td>bnxt_en</td><td>6.5.0-28-generic</td><td>226.0.145.0/pkg 226.1.107.1</td><td>5c:6f:69:9d:43:71</td><td>1</td><td>Enabled</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Network IRQ Mapping">Network IRQ Mapping</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Interface</th><th>CPU:IRQs CPU:IRQs ...</th></tr></thead><tbody><tr><td>ens259f0np0</td><td>0:225 2:220 4:230 7:241 9:245 10:227 11:246 12:222 14:233 17:236 20:216 22:229 24:235 27:237 28:238 30:219 66:240 68:244 69:226 71:221 73:231 75:232 76:242 78:247 80:223 81:217 82:228 85:234 86:243 90:224 92:218 94:239</td></tr><tr><td>ens259f1np1</td><td>1:270 3:272 5:277 6:260 8:262 13:255 15:257 16:274 18:279 19:263 21:249 23:256 25:258 26:275 29:264 31:254 64:276 65:259 67:261 70:271 72:273 74:278 77:266 79:268 83:252 84:280 87:267 88:250 89:269 91:251 93:253 95:265</td></tr><tr><td>ens802f0np0</td><td>33:292 35:296 41:287 43:293 45:297 51:289 53:294 55:298 59:303 61:291 62:312 63:295 97:305 98:300 99:309 101:283 103:286 106:281 107:306 108:301 109:310 111:284 113:288 116:282 117:307 118:302 119:311 121:285 123:290 125:304 126:299 127:308</td></tr><tr><td>ens802f1np1</td><td>32:335 34:313 36:316 37:338 38:319 39:341 40:330 42:336 44:314 46:317 47:339 48:321 49:343 50:332 52:337 54:315 56:318 57:340 58:323 60:334 96:325 100:326 102:329 104:320 105:342 110:327 112:331 114:322 115:344 120:328 122:333 124:324</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Disk">Disk</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>NAME</th><th>MODEL</th><th>SIZE</th><th>MOUNTPOINT</th><th>FSTYPE</th><th>RQ-SIZE</th><th>MIN-IO</th><th>FwRev</th></tr></thead><tbody><tr><td>nvme0n1</td><td>Micron_7450_MTFDKBA960TFR</td><td>894.3G</td><td></td><td></td><td>1023</td><td>262144</td><td></td></tr><tr><td>nvme0n1p1</td><td></td><td>868M</td><td>/boot/efi</td><td>vfat</td><td>1023</td><td>262144</td><td></td></tr><tr><td>nvme0n1p2</td><td></td><td>1.5G</td><td></td><td>ntfs</td><td>1023</td><td>262144</td><td></td></tr><tr><td>nvme0n1p3</td><td></td><td>16M</td><td></td><td></td><td>1023</td><td>262144</td><td></td></tr><tr><td>nvme0n1p4</td><td></td><td>891.9G</td><td></td><td>ntfs</td><td>1023</td><td>262144</td><td></td></tr><tr><td>nvme1n1</td><td>SAMSUNG MZQL2960HCJR-00A07</td><td>894.3G</td><td></td><td></td><td>1023</td><td>131072</td><td></td></tr><tr><td>nvme1n1p1</td><td></td><td>16M</td><td></td><td></td><td>1023</td><td>131072</td><td></td></tr><tr><td>nvme1n1p2</td><td></td><td>513M</td><td></td><td>vfat</td><td>1023</td><td>131072</td><td></td></tr><tr><td>nvme1n1p3</td><td></td><td>893.7G</td><td>/</td><td>ext4</td><td>1023</td><td>131072</td><td></td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Filesystem">Filesystem</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Filesystem</th><th>Size</th><th>Used</th><th>Avail</th><th>Use%</th><th>Mounted on</th><th>Mount Options</th></tr></thead><tbody><tr><td>tmpfs</td><td>51G</td><td>3.9M</td><td>51G</td><td>1%</td><td>/run</td><td>rw,nosuid,nodev,noexec,relatime,size=52809852k,mode=755,inode64</td></tr><tr><td>/dev/nvme1n1p3</td><td>879G</td><td>796G</td><td>39G</td><td>96%</td><td>/</td><td>rw,relatime,errors=remount-ro,stripe=32</td></tr><tr><td>tmpfs</td><td>252G</td><td>49M</td><td>252G</td><td>1%</td><td>/dev/shm</td><td>rw,nosuid,nodev,inode64</td></tr><tr><td>tmpfs</td><td>5.0M</td><td>0</td><td>5.0M</td><td>0%</td><td>/run/lock</td><td>rw,nosuid,nodev,noexec,relatime,size=5120k,inode64</td></tr><tr><td>efivarfs</td><td>496K</td><td>380K</td><td>112K</td><td>78%</td><td>/sys/firmware/efi/efivars</td><td>rw,nosuid,nodev,noexec,relatime</td></tr><tr><td>/dev/nvme0n1p1</td><td>867M</td><td>34M</td><td>833M</td><td>4%</td><td>/boot/efi</td><td>rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro</td></tr><tr><td>tmpfs</td><td>51G</td><td>2.5M</td><td>51G</td><td>1%</td><td>/run/user/1000</td><td>rw,nosuid,nodev,relatime,size=52809848k,nr_inodes=13202462,mode=700,uid=1000,gid=1000,inode64</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="GPU">GPU</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">Manufacturer</td><td>ASPEED</td></tr><tr><td style="font-weight:bold">Model</td><td>Unknown</td></tr><tr><td style="font-weight:bold">PCI ID</td><td>1A03:2000</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="CXL Device">CXL Device</h2>
+No data found.
+                    </section>
+                    
+                    <section>
+                        <h2 id="Vulnerability">Vulnerability</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">CVE-2017-5715</td><td>OK (IBRS + IBPB are mitigating the vulnerability)</td></tr><tr><td style="font-weight:bold">CVE-2017-5753</td><td>OK (Mitigation: usercopy/swapgs barriers and __user pointer sanitization)</td></tr><tr><td style="font-weight:bold">CVE-2017-5754</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2018-12126</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2018-12127</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2018-12130</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2018-12207</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2018-3615</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2018-3620</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2018-3639</td><td>OK (Mitigation: Speculative Store Bypass disabled via prctl)</td></tr><tr><td style="font-weight:bold">CVE-2018-3640</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2018-3646</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2019-11091</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2019-11135</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2020-0543</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2022-40982</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2023-20569</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2023-20593</td><td>OK (your CPU vendor reported your CPU model as not affected)</td></tr><tr><td style="font-weight:bold">CVE-2023-23583</td><td>OK (Your microcode mitigates the vulnerability)</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Process">Process</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>PID</th><th>PPID</th><th>%CPU</th><th>%MEM</th><th>RSS</th><th>COMMAND</th></tr></thead><tbody><tr><td>2978817</td><td>766306</td><td>34.8</td><td>5.8</td><td>30841400</td><td>/home/qmed-intel/env/bin/python3 -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-634f7487-ecf3-4bae-8792-738ec600871b.json</td></tr><tr><td>3145379</td><td>766306</td><td>28.8</td><td>2.1</td><td>11430776</td><td>/home/qmed-intel/env/bin/python -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-973d5005-9852-4152-9536-185be79cbaa0.json</td></tr><tr><td>2659677</td><td>766306</td><td>10.2</td><td>3.4</td><td>18296336</td><td>/home/qmed-intel/env/bin/python3 -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-fc660e63-212b-43d2-9bc7-e50b5014bc80.json</td></tr><tr><td>828815</td><td>2130</td><td>2.7</td><td>3.6</td><td>19274400</td><td>/home/qmed-intel/env/bin/python3 -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-243aa2a2-8c07-450f-a918-44b00e1d47f6.json</td></tr><tr><td>4128532</td><td>22023</td><td>1.7</td><td>0.0</td><td>68608</td><td>/snap/firefox/4209/usr/lib/firefox/firefox -contentproc -childID 34005 -isForBrowser -prefsLen 31819 -prefMapSize 242405 -jsInitLen 234952 -parentBuildID 20240427193319 -greomni /snap/firefox/4209/usr/lib/firefox/omni.ja -appomni /snap/firefox/4209/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/4209/usr/lib/firefox/browser {adcdeed4-ea34-4cb9-a9a9-c636cc153d1c} 22023 true tab</td></tr><tr><td>381172</td><td>2067</td><td>1.7</td><td>0.1</td><td>535700</td><td>/usr/bin/anydesk --backend</td></tr><tr><td>22023</td><td>2543</td><td>1.7</td><td>0.2</td><td>1311104</td><td>/snap/firefox/4209/usr/lib/firefox/firefox</td></tr><tr><td>2543</td><td>2130</td><td>1.7</td><td>0.1</td><td>841424</td><td>/usr/bin/gnome-shell</td></tr><tr><td>2920174</td><td>2543</td><td>1.6</td><td>0.0</td><td>181212</td><td>/tmp/.mount_LM_StuTDkgsk/lm-studio</td></tr><tr><td>3922719</td><td>1</td><td>1.3</td><td>0.0</td><td>29320</td><td>/usr/bin/containerd</td></tr><tr><td>2780858</td><td>1</td><td>1.3</td><td>0.0</td><td>312320</td><td>/usr/local/bin/ollama serve</td></tr><tr><td>28694</td><td>2130</td><td>1.3</td><td>7.4</td><td>39374184</td><td>/home/qmed-intel/env/bin/python3 -m ipykernel_launcher -f /home/qmed-intel/.local/share/jupyter/runtime/kernel-eba53eaa-7085-45c6-91c0-b9aee4996c51.json</td></tr><tr><td>2163</td><td>2161</td><td>1.1</td><td>0.0</td><td>356632</td><td>/usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -nolisten tcp -background none -noreset -keeptty -novtswitch -verbose 3</td></tr><tr><td>2890898</td><td>22023</td><td>0.7</td><td>0.0</td><td>298460</td><td>/snap/firefox/4209/usr/lib/firefox/firefox -contentproc -childID 29074 -isForBrowser -prefsLen 31819 -prefMapSize 242405 -jsInitLen 234952 -parentBuildID 20240427193319 -greomni /snap/firefox/4209/usr/lib/firefox/omni.ja -appomni /snap/firefox/4209/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/4209/usr/lib/firefox/browser {a826bef0-dbfc-4569-8e1a-17affe97770c} 22023 true tab</td></tr><tr><td>766106</td><td>22023</td><td>0.7</td><td>0.2</td><td>1080712</td><td>/snap/firefox/4209/usr/lib/firefox/firefox -contentproc -childID 7840 -isForBrowser -prefsLen 31776 -prefMapSize 242405 -jsInitLen 234952 -parentBuildID 20240427193319 -greomni /snap/firefox/4209/usr/lib/firefox/omni.ja -appomni /snap/firefox/4209/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/4209/usr/lib/firefox/browser {c53a6c6d-e16c-4b3b-bd1d-c3e5dcd46bb8} 22023 true tab</td></tr><tr><td>766306</td><td>766292</td><td>0.6</td><td>0.0</td><td>143252</td><td>/usr/bin/python3 /home/qmed-intel/.local/bin/jupyter-notebook</td></tr><tr><td>2140</td><td>2130</td><td>0.6</td><td>0.0</td><td>22528</td><td>/usr/bin/pulseaudio --daemonize=no --log-target=journal</td></tr><tr><td>2780059</td><td>22023</td><td>0.5</td><td>0.0</td><td>230652</td><td>/snap/firefox/4209/usr/lib/firefox/firefox -contentproc -childID 29064 -isForBrowser -prefsLen 31819 -prefMapSize 242405 -jsInitLen 234952 -parentBuildID 20240427193319 -greomni /snap/firefox/4209/usr/lib/firefox/omni.ja -appomni /snap/firefox/4209/usr/lib/firefox/browser/omni.ja -appDir /snap/firefox/4209/usr/lib/firefox/browser {a6da8246-f332-4aa5-b10f-695486e94460} 22023 true tab</td></tr><tr><td>2439648</td><td>2439632</td><td>0.5</td><td>0.0</td><td>294120</td><td>/usr/lib/libreoffice/program/soffice.bin --calc file:///home/qmed-intel/Desktop/Notebook/ZiYu/test.xlsx</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Sensor">Sensor</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Sensor</th><th>Reading</th><th>Status</th></tr></thead><tbody><tr><td>System Airflow</td><td>68.20 CFM</td><td>ok</td></tr><tr><td>PSU1 Out Current</td><td>18 Amps</td><td>ok</td></tr><tr><td>PSU2 Out Current</td><td>18 Amps</td><td>ok</td></tr><tr><td>Pwm 1</td><td>29.79 percent</td><td>ok</td></tr><tr><td>Pwm 2</td><td>29.79 percent</td><td>ok</td></tr><tr><td>Pwm 3</td><td>29.79 percent</td><td>ok</td></tr><tr><td>Pwm 4</td><td>29.79 percent</td><td>ok</td></tr><tr><td>Pwm 5</td><td>29.79 percent</td><td>ok</td></tr><tr><td>Pwm 6</td><td>29.79 percent</td><td>ok</td></tr><tr><td>Fan 1</td><td>6750 RPM</td><td>ok</td></tr><tr><td>Fan 2</td><td>6750 RPM</td><td>ok</td></tr><tr><td>Fan 3</td><td>6750 RPM</td><td>ok</td></tr><tr><td>Fan 4</td><td>6750 RPM</td><td>ok</td></tr><tr><td>Fan 5</td><td>6750 RPM</td><td>ok</td></tr><tr><td>Fan 6</td><td>6750 RPM</td><td>ok</td></tr><tr><td>PSU1 Fan Speed 1</td><td>8968 RPM</td><td>ok</td></tr><tr><td>PSU2 Fan Speed 1</td><td>8968 RPM</td><td>ok</td></tr><tr><td>CPU Power</td><td>305.80 Watts</td><td>ok</td></tr><tr><td>Memory Power</td><td>23 Watts</td><td>ok</td></tr><tr><td>PSU1 Input Power</td><td>224.20 Watts</td><td>ok</td></tr><tr><td>PSU1 Out Power</td><td>212.40 Watts</td><td>ok</td></tr><tr><td>PSU2 Input Power</td><td>224.20 Watts</td><td>ok</td></tr><tr><td>PSU2 Out Power</td><td>212.40 Watts</td><td>ok</td></tr><tr><td>Total Power</td><td>464 Watts</td><td>ok</td></tr><tr><td>Aggr1 Temp</td><td>29 degrees C</td><td>ok</td></tr><tr><td>Aggr2 Temp</td><td>-42 degrees C</td><td>ok</td></tr><tr><td>BB BMC Temp</td><td>36 degrees C</td><td>ok</td></tr><tr><td>BB M2 Temp</td><td>38 degrees C</td><td>ok</td></tr><tr><td>BB OCP Temp</td><td>35 degrees C</td><td>ok</td></tr><tr><td>BB P0 VR Temp</td><td>28 degrees C</td><td>ok</td></tr><tr><td>BB P1 VR Temp</td><td>30 degrees C</td><td>ok</td></tr><tr><td>BB Riser 2 Temp</td><td>33 degrees C</td><td>ok</td></tr><tr><td>CPU0 VR Temp</td><td>35 degrees C</td><td>ok</td></tr><tr><td>CPU1 VR Temp</td><td>37 degrees C</td><td>ok</td></tr><tr><td>DTS CPU0</td><td>-52 degrees C</td><td>ok</td></tr><tr><td>DTS CPU1</td><td>-49 degrees C</td><td>ok</td></tr><tr><td>Die CPU0</td><td>38 degrees C</td><td>ok</td></tr><tr><td>Die CPU1</td><td>41 degrees C</td><td>ok</td></tr><tr><td>Exit Air Temp</td><td>36 degrees C</td><td>ok</td></tr><tr><td>Front Panel Temp</td><td>25 degrees C</td><td>ok</td></tr><tr><td>HSBP 1 Temp</td><td>25 degrees C</td><td>ok</td></tr><tr><td>Margin CPU0</td><td>-44 degrees C</td><td>ok</td></tr><tr><td>Margin CPU1</td><td>-42 degrees C</td><td>ok</td></tr><tr><td>NVMe Aggr 1</td><td>30 degrees C</td><td>ok</td></tr><tr><td>P0 DIMM ABCD Mgn</td><td>-67 degrees C</td><td>ok</td></tr><tr><td>P0 DIMM EFGH Mgn</td><td>-66 degrees C</td><td>ok</td></tr><tr><td>P1 DIMM ABCD Mgn</td><td>-66 degrees C</td><td>ok</td></tr><tr><td>P1 DIMM EFGH Mgn</td><td>-65 degrees C</td><td>ok</td></tr><tr><td>PCH Temp</td><td>38 degrees C</td><td>ok</td></tr><tr><td>PSU1 Temperature</td><td>27 degrees C</td><td>ok</td></tr><tr><td>PSU2 Temperature</td><td>29 degrees C</td><td>ok</td></tr><tr><td>Riser 1 Temp</td><td>34 degrees C</td><td>ok</td></tr><tr><td>Riser 2 Temp</td><td>35 degrees C</td><td>ok</td></tr><tr><td>Riser 3 Temp</td><td>32 degrees C</td><td>ok</td></tr><tr><td>TCC CPU0</td><td>0 percent</td><td>ok</td></tr><tr><td>TCC CPU1</td><td>0 percent</td><td>ok</td></tr><tr><td>P1V8 PCH</td><td>1.80 Volts</td><td>ok</td></tr><tr><td>P3V3</td><td>3.32 Volts</td><td>ok</td></tr><tr><td>P3VBAT</td><td>3.08 Volts</td><td>ok</td></tr><tr><td>P5V</td><td>4.99 Volts</td><td>ok</td></tr><tr><td>P12V AUX</td><td>12.15 Volts</td><td>ok</td></tr><tr><td>P12V PSU</td><td>12.15 Volts</td><td>ok</td></tr><tr><td>P105 PCH AUX</td><td>1.05 Volts</td><td>ok</td></tr><tr><td>PVCCD HV CPU0</td><td>1.15 Volts</td><td>ok</td></tr><tr><td>PVCCD HV CPU1</td><td>1.16 Volts</td><td>ok</td></tr><tr><td>PVCCFA EHV CPU0</td><td>1.80 Volts</td><td>ok</td></tr><tr><td>PVCCFA EHV CPU1</td><td>1.81 Volts</td><td>ok</td></tr><tr><td>PVCCINFAON CPU0</td><td>1.09 Volts</td><td>ok</td></tr><tr><td>PVCCINFAON CPU1</td><td>1.09 Volts</td><td>ok</td></tr><tr><td>PVCCIN CPU0</td><td>1.82 Volts</td><td>ok</td></tr><tr><td>PVCCIN CPU1</td><td>1.82 Volts</td><td>ok</td></tr><tr><td>PVNN PCH AUX</td><td>0.90 Volts</td><td>ok</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Chassis Status">Chassis Status</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">Last Power Event</td><td>ac-failed</td></tr><tr><td style="font-weight:bold">Power Overload</td><td>false</td></tr><tr><td style="font-weight:bold">Main Power Fault</td><td>false</td></tr><tr><td style="font-weight:bold">Power Restore Policy</td><td>always-off</td></tr><tr><td style="font-weight:bold">Drive Fault</td><td>false</td></tr><tr><td style="font-weight:bold">Cooling/Fan Fault</td><td>false</td></tr><tr><td style="font-weight:bold">System Time</td><td>06/25/24 10:56:44 +08</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="System Event Log">System Event Log</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Date</th><th>Time</th><th>Sensor</th><th>Status</th><th>Event</th></tr></thead><tbody><tr><td>04/16/24</td><td>02:41:26 +08</td><td>Fan #0x10</td><td>Lower Non-critical going high</td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:05 +08</td><td>Temperature #0x30</td><td>Lower Non-critical going low </td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Lower Non-critical going high</td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Lower Critical going low </td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Lower Critical going high</td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Lower Non-recoverable going low </td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Lower Non-recoverable going high</td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Upper Non-critical going low </td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Upper Non-critical going high</td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Upper Critical going low </td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Upper Critical going high</td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Upper Non-recoverable going low </td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td>Upper Non-recoverable going high</td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td></td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td></td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td></td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:42:06 +08</td><td>Temperature #0x30</td><td></td><td>Asserted</td></tr><tr><td>04/16/24</td><td>02:43:40 +08</td><td>Fan #0x06</td><td>Lower Critical going low </td><td>Asserted</td></tr><tr><td>04/17/24</td><td>11:23:52 +08</td><td>Fan #0x06</td><td>Lower Critical going low </td><td>Asserted</td></tr><tr><td>05/06/24</td><td>21:26:15 +08</td><td>Fan #0x06</td><td>Lower Critical going low </td><td>Asserted</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="Kernel Log">Kernel Log</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Entries</th></tr></thead><tbody><tr><td>[  +0.000300] audit: type=1107 audit(1719283454.431:7275): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg=&#39;apparmor=&#34;DENIED&#34; operation=&#34;dbus_method_call&#34;  bus=&#34;system&#34; path=&#34;/org/freedesktop/hostname1&#34; interface=&#34;org.freedesktop.DBus.Properties&#34; member=&#34;GetAll&#34; mask=&#34;send&#34; name=&#34;:1.37301&#34; pid=22023 label=&#34;snap.firefox.firefox&#34; peer_pid=4123765 peer_label=&#34;unconfined&#34;</td></tr><tr><td>exe=&#34;/usr/bin/dbus-daemon&#34; sauid=102 hostname=? addr=? terminal=?&#39;</td></tr><tr><td>[  +0.000247] audit: type=1107 audit(1719283454.431:7276): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg=&#39;apparmor=&#34;DENIED&#34; operation=&#34;dbus_method_call&#34;  bus=&#34;system&#34; path=&#34;/org/freedesktop/hostname1&#34; interface=&#34;org.freedesktop.DBus.Properties&#34; member=&#34;GetAll&#34; mask=&#34;send&#34; name=&#34;:1.37301&#34; pid=22023 label=&#34;snap.firefox.firefox&#34; peer_pid=4123765 peer_label=&#34;unconfined&#34;</td></tr><tr><td>exe=&#34;/usr/bin/dbus-daemon&#34; sauid=102 hostname=? addr=? terminal=?&#39;</td></tr><tr><td>[  +0.000410] audit: type=1107 audit(1719283454.431:7277): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg=&#39;apparmor=&#34;DENIED&#34; operation=&#34;dbus_method_call&#34;  bus=&#34;system&#34; path=&#34;/org/freedesktop/hostname1&#34; interface=&#34;org.freedesktop.DBus.Properties&#34; member=&#34;GetAll&#34; mask=&#34;send&#34; name=&#34;:1.37301&#34; pid=22023 label=&#34;snap.firefox.firefox&#34; peer_pid=4123765 peer_label=&#34;unconfined&#34;</td></tr><tr><td>exe=&#34;/usr/bin/dbus-daemon&#34; sauid=102 hostname=? addr=? terminal=?&#39;</td></tr><tr><td>[  +0.000165] audit: type=1107 audit(1719283454.431:7278): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg=&#39;apparmor=&#34;DENIED&#34; operation=&#34;dbus_method_call&#34;  bus=&#34;system&#34; path=&#34;/org/freedesktop/hostname1&#34; interface=&#34;org.freedesktop.DBus.Properties&#34; member=&#34;GetAll&#34; mask=&#34;send&#34; name=&#34;:1.37301&#34; pid=22023 label=&#34;snap.firefox.firefox&#34; peer_pid=4123765 peer_label=&#34;unconfined&#34;</td></tr><tr><td>exe=&#34;/usr/bin/dbus-daemon&#34; sauid=102 hostname=? addr=? terminal=?&#39;</td></tr><tr><td>[  +0.000355] audit: type=1107 audit(1719283454.431:7279): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg=&#39;apparmor=&#34;DENIED&#34; operation=&#34;dbus_method_call&#34;  bus=&#34;system&#34; path=&#34;/org/freedesktop/hostname1&#34; interface=&#34;org.freedesktop.DBus.Properties&#34; member=&#34;GetAll&#34; mask=&#34;send&#34; name=&#34;:1.37301&#34; pid=22023 label=&#34;snap.firefox.firefox&#34; peer_pid=4123765 peer_label=&#34;unconfined&#34;</td></tr><tr><td>exe=&#34;/usr/bin/dbus-daemon&#34; sauid=102 hostname=? addr=? terminal=?&#39;</td></tr><tr><td>[  +6.387720] kauditd_printk_skb: 22 callbacks suppressed</td></tr><tr><td>[  +0.000009] audit: type=1107 audit(1719283460.819:7302): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg=&#39;apparmor=&#34;DENIED&#34; operation=&#34;dbus_signal&#34;  bus=&#34;system&#34; path=&#34;/org/freedesktop/login1&#34; interface=&#34;org.freedesktop.DBus.Properties&#34; member=&#34;PropertiesChanged&#34; name=&#34;:1.16&#34; mask=&#34;receive&#34; pid=22023 label=&#34;snap.firefox.firefox&#34; peer_pid=1983 peer_label=&#34;unconfined&#34;</td></tr><tr><td>exe=&#34;/usr/bin/dbus-daemon&#34; sauid=102 hostname=? addr=? terminal=?&#39;</td></tr><tr><td>[Jun25 10:48] audit: type=1107 audit(1719283765.180:7303): pid=1950 uid=102 auid=4294967295 ses=4294967295 subj=unconfined msg=&#39;apparmor=&#34;DENIED&#34; operation=&#34;dbus_signal&#34;  bus=&#34;system&#34; path=&#34;/org/freedesktop/login1&#34; interface=&#34;org.freedesktop.DBus.Properties&#34; member=&#34;PropertiesChanged&#34; name=&#34;:1.16&#34; mask=&#34;receive&#34; pid=22023 label=&#34;snap.firefox.firefox&#34; peer_pid=1983 peer_label=&#34;unconfined&#34;</td></tr><tr><td>exe=&#34;/usr/bin/dbus-daemon&#34; sauid=102 hostname=? addr=? terminal=?&#39;</td></tr><tr><td>[Jun25 10:53] audit: type=1400 audit(1719284013.301:7304): apparmor=&#34;DENIED&#34; operation=&#34;open&#34; class=&#34;file&#34; profile=&#34;snap.firefox.firefox&#34; name=&#34;/home/qmed-intel/.wget-hsts&#34; pid=22023 comm=&#34;pool-firefox&#34; requested_mask=&#34;r&#34; denied_mask=&#34;r&#34; fsuid=1000 ouid=1000</td></tr><tr><td>[  +0.000508] audit: type=1400 audit(1719284013.305:7305): apparmor=&#34;DENIED&#34; operation=&#34;open&#34; class=&#34;file&#34; profile=&#34;snap.firefox.firefox&#34; name=&#34;/home/qmed-intel/.wget-hsts&#34; pid=22023 comm=&#34;pool-firefox&#34; requested_mask=&#34;r&#34; denied_mask=&#34;r&#34; fsuid=1000 ouid=1000</td></tr><tr><td>[  +0.000018] audit: type=1400 audit(1719284013.305:7306): apparmor=&#34;DENIED&#34; operation=&#34;open&#34; class=&#34;file&#34; profile=&#34;snap.firefox.firefox&#34; name=&#34;/home/qmed-intel/.wget-hsts&#34; pid=22023 comm=&#34;pool-firefox&#34; requested_mask=&#34;r&#34; denied_mask=&#34;r&#34; fsuid=1000 ouid=1000</td></tr><tr><td>[Jun25 10:56] msr: Write to unrecognized MSR 0xb0 by msrwrite (pid: 4128833).</td></tr><tr><td>[  +0.000007] msr: See https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/about for details.</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="PMU">PMU</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">cpu_cycles</td><td>Active</td></tr><tr><td style="font-weight:bold">instructions</td><td>Inactive</td></tr><tr><td style="font-weight:bold">ref_cycles</td><td>Inactive</td></tr><tr><td style="font-weight:bold">topdown_slots</td><td>Inactive</td></tr><tr><td style="font-weight:bold">gen_programmable_1</td><td>Inactive</td></tr><tr><td style="font-weight:bold">gen_programmable_2</td><td>Inactive</td></tr><tr><td style="font-weight:bold">gen_programmable_3</td><td>Inactive</td></tr><tr><td style="font-weight:bold">gen_programmable_4</td><td>Inactive</td></tr><tr><td style="font-weight:bold">gen_programmable_5</td><td>Inactive</td></tr><tr><td style="font-weight:bold">gen_programmable_6</td><td>Inactive</td></tr><tr><td style="font-weight:bold">gen_programmable_7</td><td>Inactive</td></tr><tr><td style="font-weight:bold">gen_programmable_8</td><td>Inactive</td></tr></tbody></table>
+                    </section>
+                    
+                    <section>
+                        <h2 id="svr-info">svr-info</h2>
+<table class="pure-table pure-table-striped"><tbody><tr><td style="font-weight:bold">version</td><td>2.10.0_2024-05-03_6e725730</td></tr></tbody></table>
+                    </section>
+                    
+                </div>
+            </main>
+        </div>
+        
+    
+        
+        <div id="BenchmarkContent" class="tabcontent tabnotdefault">
+            <main class="content">
+                
+                <h3>Use the &#34;-benchmark all&#34; option to collect all micro-benchmarking data. See &#34;-help&#34; for finer control.</h3>
+                
+                
+                <section>
+                    <h2 id="Summary">Summary</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="Core Frequency">Core Frequency</h2>
+<div class="chart-container" style="max-width: 900px">
+<canvas id="scatterchart0"></canvas>
+</div>
+<script>
+new Chart(document.getElementById('scatterchart0'), {
+    type: 'scatter',
+    data: {
+        datasets: [
+{
+	label: 'non-avx:spec',
+	data: [{x: 1, y: 3.4},{x: 2, y: 3.4},{x: 3, y: 3.4},{x: 4, y: 3.4},{x: 5, y: 3.4},{x: 6, y: 3.4},{x: 7, y: 3.4},{x: 8, y: 3.4},{x: 9, y: 3.4},{x: 10, y: 3.4},{x: 11, y: 3.4},{x: 12, y: 3.4},{x: 13, y: 3.4},{x: 14, y: 3.4},{x: 15, y: 3.4},{x: 16, y: 3.4},{x: 17, y: 3.1},{x: 18, y: 3.1},{x: 19, y: 3.1},{x: 20, y: 3.1},{x: 21, y: 3.0},{x: 22, y: 3.0},{x: 23, y: 2.8},{x: 24, y: 2.8},{x: 25, y: 2.8},{x: 26, y: 2.8},{x: 27, y: 2.7},{x: 28, y: 2.7},{x: 29, y: 2.6},{x: 30, y: 2.6},{x: 31, y: 2.6},{x: 32, y: 2.6}],
+	backgroundColor: '#9F0162',
+	borderColor: '#9F0162',
+	borderWidth: 1,
+	showLine: true
+}
+]
+    },
+    options: {
+        aspectRatio: 4,
+        scales: {
+            x: {
+                beginAtZero: false,
+                title: {
+                    text: "Core Count",
+                    display: true
+                }
+            },
+            y: {
+                beginAtZero: false,
+                title: {
+                    text: "Frequency (GHz)",
+                    display: true
+                },
+            }
+        },
+        plugins: {
+            title: {
+                text: "",
+                display: false,
+                font: {
+                    size: 18
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        return ctx.dataset.label + " (" + ctx.parsed.x + ", " + ctx.parsed.y + ")";
+                    }
+                }
+            },
+            legend: {
+                display: true
+            }
+        }
+    }
+});
+</script>
+
+<table class="pure-table pure-table-striped"><thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th><th>31</th><th>32</th></tr></thead><tbody><tr><td style="font-weight:bold">non-avx:spec</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.4</td><td>3.1</td><td>3.1</td><td>3.1</td><td>3.1</td><td>3.0</td><td>3.0</td><td>2.8</td><td>2.8</td><td>2.8</td><td>2.8</td><td>2.7</td><td>2.7</td><td>2.6</td><td>2.6</td><td>2.6</td><td>2.6</td></tr><tr><td style="font-weight:bold">non-avx</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="font-weight:bold">avx128</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="font-weight:bold">avx256</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td style="font-weight:bold">avx512</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+                </section>
+                
+                <section>
+                    <h2 id="Memory Bandwidth and Latency">Memory Bandwidth and Latency</h2>
+No data found.<br>Using the OSS release of svr-info? Memory benchmarks require Intel Memory Latency Checker (MLC) be downloaded, extracted, and the Linux binary placed in the svr-info/extras directory. See the repo README for additional information.
+                </section>
+                
+                <section>
+                    <h2 id="Memory NUMA Bandwidth">Memory NUMA Bandwidth</h2>
+No data found.
+                </section>
+                
+                <h3>&nbsp;</h3>
+            </main>
+        </div>
+        
+    
+        
+        <div id="ProfileContent" class="tabcontent tabnotdefault">
+            <main class="content">
+                
+                <h3>Use the &#34;-profile all&#34; option to collect all system profiling data. See &#34;-help&#34; for finer control.</h3>
+                
+                
+                <section>
+                    <h2 id="Summary">Summary</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="Average CPU Utilization">Average CPU Utilization</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="CPU Utilization">CPU Utilization</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="Power Stats">Power Stats</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="IRQ Rate">IRQ Rate</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="Drive Stats">Drive Stats</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="Network Stats">Network Stats</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="Memory Stats">Memory Stats</h2>
+No data found.
+                </section>
+                
+                <section>
+                    <h2 id="PMU Metrics">PMU Metrics</h2>
+No data found.
+                </section>
+                
+                <h3>&nbsp;</h3>
+            </main>
+        </div>
+        
+    
+        
+        <div id="AnalyzeContent" class="tabcontent tabnotdefault">
+            <main class="content">
+                
+                <h3>Use the &#34;-analyze all&#34; option to collect all analysis data. See &#34;-help&#34; for finer control.</h3>
+                
+                <h3>Note: Perl is required on the target machine to collapse the call stacks used to produce System Flame Graphs.</h3>
+                
+                
+                <section>
+                    <h2 id="Code Path Frequency">Code Path Frequency</h2>
+<h2>System</h2>
+No data found.<h2>Java</h2>
+No data found.
+                </section>
+                
+                <h3>&nbsp;</h3>
+            </main>
+        </div>
+        
+    
+        
+        <div id="InsightsContent" class="tabcontent tabnotdefault">
+            <main class="content">
+                
+                <h3>Insights are derived from data collected by Intel® System Health Inspector. They are provided for consideration but may not always be relevant.</h3>
+                
+                
+                <section>
+                    <h2 id="Insight">Insight</h2>
+<table class="pure-table pure-table-striped"><thead><tr><th>Recommendation</th><th>Justification</th></tr></thead><tbody><tr><td>Consider reviewing the System Event Log table located on the Configuration page.</td><td>Detected &#39;16&#39; temperature-related service action(s) in the System Event Log.</td></tr><tr><td>Consider setting the CPU frequency governors to &#39;performance&#39;.</td><td>CPU frequency governors are set to &#39;powersave&#39;.</td></tr><tr><td>Consider configuring DSA to allow accelerated data copy and transformation in DSA-enabled software.</td><td>No work queues are configured for DSA accelerator(s).</td></tr><tr><td>Consider setting the Power and Performance policy to &#39;Performance&#39;.</td><td>Power and Performance policy is set to &#39;Normal Powersave (7)&#39;.</td></tr><tr><td>Consider configuring DIMMs for their maximum supported speed.</td><td>DRAM DIMMs are configured at less than their maximum supported speed.</td></tr></tbody></table>
+                </section>
+                
+                <h3>&nbsp;</h3>
+            </main>
+        </div>
+        
+    
+    <script>
+        const widthOpen="150px"
+        const widthClosed="30px"
+        function openNav() {
+            document.getElementById("mySidebar").style.width = widthOpen;
+            document.getElementById("myConfigurationContent").style.marginLeft = widthOpen;
+            document.querySelector(".togglebtn").innerHTML="<"
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = widthClosed;
+            document.getElementById("myConfigurationContent").style.marginLeft= widthClosed;
+            document.querySelector(".togglebtn").innerHTML=">"
+        }
+
+        function toggleNav() {
+            if (document.getElementById("mySidebar").style.width !== widthOpen) {
+                openNav()
+            } else {
+                closeNav()
+            }
+        }
+        
+        openNav()
+    </script>
+    <script>
+        function openTab(evt, tabName) {
+            
+            var i, tabcontent, tablinks;
+
+            
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        
+        document.getElementById("defaultOpen").click();
+    </script>
+</body>
+
+</html>

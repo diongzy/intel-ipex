@@ -1,0 +1,390 @@
+RELEASE NOTES
+Intel® System Health Inspector (AKA svr-info)
+
+Fully Supported Platforms
+- Xeon Micro-Architectures: SRF,EMR,SPR,CPX,ICX,CLX,SKX,BDX,HSX
+- Operating Systems: Ubuntu 16.04, 18.04, 20.04, 22.04, CentOS 7, Amazon Linux 2, Debian 11, RHEL 9, Rocky Linux 8
+  Note: svr-info may work on other micro-architectures and Linux distributions, but has not been thoroughly tested
+
+2.10.0
+Features Added
+- Support for Sierra Forest Xeon CPUs
+- The '-benchmark frequency' option now measures AVX2/3 frequencies in addition to non-AVX frequencies
+- Minor improvements to System Summary field in Excel 'Brief' report
+- Nodes in multi-node HTML report will now be in the same order as presented in targets file
+- SRF and GNR ISAs identified in ISAs report table
+- EMR reference benchmark data added
+
+Other Changes
+- Removed "Feature" table from report
+- Removed Active Idle settings from report
+
+Known Issues
+- The '-profile pmu' and '-profile power' options do not function on SRF.
+- The storage micro-benchmark may not run on CentOS due to OS locale settings.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population and CPU frequencies may not be accurate on some public cloud IaaS VMs.
+ 
+2.9.1
+Bugs Fixed
+- Extremely long run time on some EMR virtual machines
+
+2.9.0
+Features Added
+- Report CPU temperature when CPUs have been active when '-benchmark turbo' is run
+- Memory population chart for Dell SPR platform
+- Extend prefetchers field to include all known prefetchers
+
+Bugs Fixed
+- Slow report generation when an extremely deep call stack is captured with the -analyze option
+- LLC size mis-calculated on EMR MCC SKUs
+- Micro-architecture mis-identified on AWS m7i instances
+
+Known Issues
+- Frequency measurement benchmark not yet supported on GNR and SRF
+- The storage micro-benchmark may not run on CentOS due to OS locale settings.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population and CPU frequencies may not be accurate on some public cloud IaaS VMs.
+
+2.8.0
+Bugs Fixed
+- Turbo on/off incorrectly reported on Excel Brief Report summary field
+Features Added
+- PMU-based metrics added to profiling options, e.g., -profile pmu or -profile all
+- Package and DRAM power stats added to profiling options, e.g., -profile power or -profile all
+- Option to skip configuration data collection when profiling or analyzing, e.g., -profile all -noconfig
+- Recognize DLB and QAT accelerators on SRF and GNR
+- ISA table extended to show availability of newest ISAs
+- Add recognition of temperature related entries in System Event Log to Insights
+- Recognize GNR, SRF, and AMD Bergamo CPUs
+- upgraded to MLC v3.11
+Known Issues
+- Frequency measurement benchmark not yet supported on GNR and SRF
+- The storage micro-benchmark may not run on CentOS due to OS locale settings.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population and CPU frequencies may not be accurate on some public cloud IaaS VMs.
+
+2.7.4
+Bugs Fixed
+- false positive Vulnerability for CVE-2022-40982 ("Downfall") on some ICX systems
+
+2.7.3
+Sub-components Updated
+- spectre-meltdown-checker -- updated to latest HEAD commit
+- others -- internal components used to collect data and generate reports
+Features Added
+- None
+Bugs Fixed
+- None
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to OS locale settings.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population and CPU frequencies may not be accurate on some public cloud IaaS VMs.
+
+2.7.2
+Features Added
+- None
+Bugs Fixed
+- Corrupt Excel reports in svr-info version 2.7.1 caused by incompatibility between Go 1.21 and Excelize package. Reverting to Go 1.20.7.
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to OS locale settings.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population and CPU frequencies may not be accurate on some public cloud IaaS VMs.
+
+2.7.1
+Features Added
+- None
+Bugs Fixed
+- CXL devices were not being detected due to lspci version incompatibility
+- Insights that rely on CPU micro-architecture names were not matching appended MCC/XCC text
+- Align power-perf policy insight to labels introduced in 2.7.0
+Minor Changes
+- Use latest (as of release build time) spectre-meltdown-checker script from public repo
+- IAX accelerator renamed to IAA
+- Fix information text regarding Perl on HTML Analysis report
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to OS locale settings.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population and CPU frequencies may not be accurate on some public cloud IaaS VMs.
+
+2.7.0
+Features Added
+- Power & Performance Setting Labels refined. Now includes "Performance", "Balance Performance", "Normal", "Normal Powersave", "Balance Powersave", and "Powersave". Report output also includes specific EPB value, e.g., "Performance (6)".
+- Excel 'brief' report's Marketing Claim entry now includes on-CPU accelerator count.
+- Extended the Accelerators table to indicate the configuration of work queues for DSA and IAX.
+- Extended Insights to trigger if work queues are not configured for DSA and IAX.
+Bugs Fixed
+- Fixed merging of call stacks collected with the -analyze option.
+- Added timeout to collector when attempting to install and uninstall kernel modules to avoid potential hang.
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to OS locale settings.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population and CPU frequencies may not be accurate on some public cloud IaaS VMs.
+
+2.6.0
+Features Added
+- Enable MLC on AMD by configuring huge pages
+- Improve Summary field format in Excel Brief report
+- Display 'Optimized Power Mode' settings in Uncore table
+- Add notice to HTML if MLC data missing
+Bugs Fixed
+- HTML Menu causing content scrolling issues when window re-sized
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to OS locale settings.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population and CPU frequencies may not be accurate on some public cloud IaaS VMs.
+
+2.5.0
+Features Added
+- Display file system mount options in Filesystem table
+- If file system mounted with 'discard' option, raise a warning in the Insights table
+Bugs Fixed
+- Calculate and display 'L3 per core' when L3 size is reported in Kilobytes
+- Display SPR MCC/XCC microarchitecture from GCP instances
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to locale settings.
+- HTML report may scroll out of view when menu is minimized and window is small.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population may be incorrectly reported on public cloud IaaS VMs.
+
+2.4.0
+Features Added
+- add DIMM population table for SuperMicro X11DPT-B 
+Bugs Fixed
+- fix calculation of 'L3 per core' field on multi-socket systems
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to locale settings.
+- HTML report may scroll out of view when menu is minimized and window is small.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population may be incorrectly reported on public cloud IaaS VMs.
+
+2.3.2
+Features Added
+- report L3 size from MSR, fallback to lscpu
+- new field 'L3 per core' in CPU table
+- if AMD 'frequency boost' detected, show 'enabled (AMD Frequency Boost)' in the Intel Turbo Boost field
+Bugs Fixed
+- Don't use "-tt" option with ssh commands that connect to remote sytems
+- Fix location of 'extras' directory
+- ARM collector binary now extracted for use at runtime
+- Graviton 2 CPU architecture detected
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to locale settings.
+- HTML report may scroll out of view when menu is minimized and window is small.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population may be incorrectly reported on public cloud IaaS VMs.
+
+2.3.1
+Features Added
+- override local temporary directory used by svr-info using the -temp CLI option
+  note: override target temporary directory using the -targettemp CLI option (was -temp)
+Bugs Fixed
+- local temporary directory now created in system's default TEMP location (default)
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to locale settings.
+- HTML report may scroll out of view when menu is minimized and window is small.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population may be incorrectly reported on public cloud IaaS VMs.
+
+2.3.0
+Features Added
+- Now an all-inclusive single binary (svr-info) for easy re-location
+  - to execute the reporter: ./svr-info -reporter "<reporter args>"
+  - to execute the collector: ./svr-info -collector "<collector args>"
+- Connect to remote machines where keys are configured in ssh-agent
+- Version tag added to all report types in new "svr-info" table.
+- Differentiate SPR XCC and MCC SKUs
+- Support added for Intel Emerald Rapids CPUs
+- Recognize Intel Sierra Forest CPUs
+- Recognize AMD Genoa CPUs
+- Differentiate CPU support vs. Platform support for an ISA
+Bugs Fixed
+- CXL menu link now navigates to the CXL table
+- Remote data collection now stopped when svr-info stopped, e.g., with Ctrl-C
+- Output data corruption due to over-aggressive filtering fixed
+- DIMM population chart fixed for SuperMicro SPR
+- Only include svr-info generated files in output tarball
+- Show spec frequencies if measured frequencies not available
+- Call calcfreq with correct number of CPUs when some CPUs are off-line
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to locale settings.
+- HTML report may scroll out of view when menu is minimized and window is small.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population may be incorrectly reported on public cloud IaaS VMs.
+
+2.2.0 - First Open Source Release
+Features Added
+- New/changed command line arguments.
+    - "-all" deprecated, use "-benchmark all"
+    - "-profile" deprecated, use "-profile all"
+    - "-analyze <system|java|all>" added
+    - "-cmd_timeout <seconds> added for limiting the time on individual collection commands
+    - if in doubt, check the built-in help with the "-h" option
+- Recommendations are now called Insights
+- Insights expanded to include hi/low CPU utilization, system vulnerabilities, old CPU.
+- Insights format now includes recommendation and justification.
+- Option added to collect software call stacks for system and Java processes with -analyze system|java|all options.
+- Memory profiling option added to Profile option.
+- Profiling collection executed before configuration collection for more deterministic timeframe.
+- Summary profile table added for profiling data.
+- Benchmark Health table renamed to Benchmark Summary and moved to top of Benchmark tab.
+- Virtualization feature indicator added to CPU table.
+- CPU QDF, if accessible, will be collected by the -megadata data collection option.
+- Accelerators table in Configuration now includes full name and description.
+- Targets file now supports leading label field and trailing comment, see targets.example file.
+Bugs Fixed
+- Log error if no targets defined in targets file
+- Support passwords that contain '$' in targets file
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to locale settings.
+- HTML report may scroll out of view when menu is minimized and window is small.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population may be incorrectly reported on public cloud IaaS VMs.
+
+2.1.2
+Bugs Fixed:
+- Correctly identify on-CPU QAT accelerator devices for SPR MCC SKUs. Previous release correctly identified these devices for SPR XCC SKUs but not MCC SKUs.
+
+2.1.1
+Bugs Fixed:
+- HTML encode (escape) data for insertion into HTML report to limit possibility of script injection security issue
+
+2.1.0
+Features Added
+- Added perf FlameGraph to Profile report (svr-info -profile).
+- JSON report format simplified.
+- CXL devices listed in Configuration report.
+- PCIe slots listed in Configuration report.
+- Uncore table added to Configuration report.
+- SPR tunable features listed in Configuration report.
+- User Guide now included in installation package.
+- Improve usability of charts in HTML report.
+- Include Brief report content in JSON report.
+Bugs Fixed
+- CPU prefetcher settings incorrectly reported
+- Incorrectly reporting DDR5 DIMMs as "<OUT OF SPEC>"
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to locale settings.
+- HTML report may scroll out of view when menu is minimized and window is small.
+- CPU cache sizes are reported in aggregate on Ubuntu 20.04 and newer.
+- DRAM population may be incorrectly reported on public cloud IaaS VMs.
+
+2.0.3
+Bugs Fixed
+- properly identify SPR Architecture when stepping is 8
+- add check for missing 2022 CVEs
+
+2.0.2
+Bugs Fixed
+- JSON report now includes all data included in HTML and XLSX reports...previously included configuration data only.
+- Fix Y-Axis labels on charts in HTML report's profile tab.
+- Add missing profile data to XLSX report.
+- Do not include loopback NICs or Ubuntu's Snap "loop#" devices in profile data.
+- Year was missing from the data field of mktg. claim table in the XLSX brief report.
+- Add missing DLB accelerator count field.
+
+2.0.1
+Bugs Fixed
+- Expand path and file arguments that contain '~' to user's home directory for cases where svr-info is not launched from a shell.
+- Fix runtime error that can occur in HTML report generation when some types of PMEM are present in system.
+
+2.0.0
+Notable Interface Changes (from 1.x to 2.x)
+ - The program name has changed from svr_info to svr-info.
+ - The command line arguments can be accessed with a single or double dash, e.g., -cpu or --cpu.
+ - HTML, JSON, and XLSX report types are generated by default. Override with the -format command line argument.
+ - HTML and XLSX report data is presented on multiple tabs.
+ - Combined (all_hosts.*) HTML and XLSX reports will be generated by default when there are two or more hosts specified in the targets file.
+ - The JSON report data structure has changed significantly.
+ - The CSV report type has been removed.
+Features Added
+ - System profiling option added (-profile). Collects system performance metrics at configurable frequency (see help).
+ - A rules engine is used to offer system configuration recommendations based on current configuration. Rules are configurable.
+ - Megadata (--megadata) feature optionally captures additional information in a series of text files. Information collected is configurable.
+ - Data from multiple hosts combined into one sheet in combined/multi-host Excel report
+ - Excel, HTML and JSON reports now rendered from same data structure for consistency across report types
+ - Display versions of Python, Java, and OpenSSL in report
+ - Temporary directories now include "svr-info" in their name to more easily identify their origin
+ - Full support for Sapphire Rapids - performance reference data, PMU registers, frequency measurement, accelerators
+ Bugs Fixed
+ - Display full name of CentOS release in report
+ - Correctly render DIMM population chart for SPR 8 socket system
+ - Do not attempt to resolve hostname during input parameter validation as it may fail under certain circumstances
+ - Passwords that include a dollar sign are now supported in targets file if dollar sign proceeded by a backslash
+ - If the tar utility is not on the target, display a reasonable error message
+Known Issues
+- The storage micro-benchmark may not run on CentOS due to locale settings.
+- HTML report may scroll out of view when menu is minimized when window is small.
+
+1.4.0
+Features Added
+- Various report additions and format improvements
+- Detect Intel GPUs and report model name
+- Report more ISA extensions, e.g. AMX and VAES
+- Detection of QAT on platform
+- Display PPIN for all installed CPUs
+- Ice Lake reference performance data updated
+- Sapphire Rapids (D-Step) reference performance data added
+- Command line option --input will now search the given directory recursively for .out files
+- Align csv/Excel report structure with HTML report
+Bugs Fixed
+- Can now measure core frequency on Sapphire Rapids
+Known Issues
+- The storage micro-benchmark may not run on CentOS 8 due to locale settings.
+- svr_info will fail to run on a fresh install of CentOS 8 because tar is not installed by default
+- passwords that include a dollar sign are not supported for remote target data collection
+
+1.3.0
+Features Added
+- Support for Sapphire Rapids (no reference performance data)
+- Update Ice Lake reference performance data
+- Cleanup HTML report layout and add new Power section
+- Improved default host data collection performance
+Bugs Fixed
+- Excel formatted report generation would fail when host names were longer than 32 characters
+- Removed micro-benchmarks that measure network metrics due to inconsistency
+Known Issues
+- The storage micro-benchmark may not run on CentOS 8 due to locale settings.
+
+1.2.4
+Features Added
+- Recognize additional CPUs for report generation
+
+1.2.3
+Bugs Fixed
+- Update collector to fix issue with PATH on CentOS 7
+
+1.2.2
+Bugs Fixed
+- CSV report crash on GCP due to NIC naming scheme in lshw output
+
+1.2.1
+Bugs Fixed
+- Error when retrieving maximum frequency from dmidecode output
+
+1.2.0
+Features Added
+- DIMM rank now included in DIMM table
+- Maximum Frequency and All-core Maximum Frequency now included in CPU details
+Bugs Fixed
+- Prefetcher MSRs now retrieved after installing msr kernel driver
+- Base Frequency now retrieved from more reliable source
+- Data collection now succeeds when PATH is exported in ~/.bashrc on target machine
+
+1.1.0
+Features Added
+- add support for Ice Lake and Cooper Lake Xeon processors
+- add support for Kaby Lake and Coffee Lake Core processors
+- reports now include PMU in-use detection
+- csv and xlsx reports expanded and reorganized
+Bugs Fixed
+- crash when output directory is set to current directory using the --output flag
+- connection to remote target times out when no user_id is specified
+- connection to remote target fails -- retry up to 3 times
+- using --ip without --user fails to connect to remote target
+- failed to collect requested information if user is 'root'
+- crash on AWS EC2 g4dn.metal
+- crash if ports used for network performance test are in use
+
+1.0.0
+- First Official Release
